@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardView extends StatefulWidget {
@@ -11,6 +12,9 @@ class _OnBoardViewState extends State<OnBoardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      body: Center(
+        child: const Text('onBoard.title').tr(),
+      ),
     );
   }
 }
