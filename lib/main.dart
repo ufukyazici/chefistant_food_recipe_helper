@@ -1,5 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_view.dart';
 import 'package:chefistant_food_recipe_helper/product/init/localization_init.dart';
+import 'package:chefistant_food_recipe_helper/product/init/theme/custom_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      theme: CustomTheme().theme,
     );
   }
 }

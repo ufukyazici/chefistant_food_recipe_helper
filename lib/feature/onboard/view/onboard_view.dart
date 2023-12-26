@@ -11,7 +11,11 @@ class _OnBoardViewState extends State<OnBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Chefistant'),
+        actions: const [Icon(Icons.radar)],
+        leading: const Icon(Icons.abc),
+      ),
       body: Center(
         child: const Text('onBoard.title').tr(),
       ),
