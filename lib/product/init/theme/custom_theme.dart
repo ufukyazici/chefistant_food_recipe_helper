@@ -14,6 +14,14 @@ class CustomTheme {
             iconTheme: IconThemeData(color: Colors.white),
             systemOverlayStyle: SystemUiOverlayStyle.light,
             titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                iconColor: MaterialStateProperty.all(Colors.white),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))))),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Colors.red, foregroundColor: Colors.white, shape: CircleBorder()),
         useMaterial3: true,
         fontFamily: GoogleFonts.roboto().fontFamily);
   }

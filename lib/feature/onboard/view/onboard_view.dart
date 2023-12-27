@@ -17,7 +17,13 @@ class _OnBoardViewState extends State<OnBoardView> {
         leading: const Icon(Icons.abc),
       ),
       body: Center(
-        child: const Text('onBoard.title').tr(),
+        child: Column(
+          children: [const Text('onBoard.title').tr(), ElevatedButton(onPressed: () {}, child: const Text("Başlat"))],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Text("+"),
       ),
     );
   }
