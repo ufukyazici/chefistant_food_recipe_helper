@@ -3,26 +3,34 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme {
+  final colorScheme = _ColorScheme();
   late ThemeData theme;
   CustomTheme() {
     theme = ThemeData(
-        appBarTheme: const AppBarTheme(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-            backgroundColor: Colors.red,
+        appBarTheme: AppBarTheme(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+            backgroundColor: colorScheme.primaryColor,
             centerTitle: true,
-            actionsIconTheme: IconThemeData(color: Colors.white),
-            iconTheme: IconThemeData(color: Colors.white),
+            actionsIconTheme: const IconThemeData(color: Colors.white),
+            iconTheme: IconThemeData(color: colorScheme.secondaryColor),
             systemOverlayStyle: SystemUiOverlayStyle.light,
-            titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+            titleTextStyle: TextStyle(color: colorScheme.secondaryColor, fontSize: 20, fontWeight: FontWeight.bold)),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-                iconColor: MaterialStateProperty.all(Colors.white),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-                backgroundColor: MaterialStateProperty.all(Colors.red),
+                iconColor: MaterialStateProperty.all(colorScheme.secondaryColor),
+                foregroundColor: MaterialStateProperty.all(colorScheme.secondaryColor),
+                backgroundColor: MaterialStateProperty.all(colorScheme.primaryColor),
                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))))),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Colors.red, foregroundColor: Colors.white, shape: CircleBorder()),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: colorScheme.primaryColor,
+            foregroundColor: colorScheme.secondaryColor,
+            shape: const CircleBorder()),
         useMaterial3: true,
         fontFamily: GoogleFonts.roboto().fontFamily);
   }
+}
+
+class _ColorScheme {
+  final Color primaryColor = Colors.red;
+  final Color secondaryColor = Colors.white;
 }

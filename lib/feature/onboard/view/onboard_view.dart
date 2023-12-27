@@ -23,7 +23,7 @@ class _OnBoardViewState extends State<OnBoardView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Text("+"),
+        child: const Icon(Icons.radar),
       ),
     );
   }
