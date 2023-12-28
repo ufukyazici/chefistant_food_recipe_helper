@@ -8,6 +8,13 @@ class OnBoardView extends StatefulWidget {
 }
 
 class _OnBoardViewState extends State<OnBoardView> {
+  bool isChecked = false;
+  void changeChecked() {
+    setState(() {
+      isChecked = !isChecked;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +39,12 @@ class _OnBoardViewState extends State<OnBoardView> {
                 trailing: Icon(Icons.ac_unit),
               )),
             ),
+            Checkbox(
+              value: isChecked,
+              onChanged: (value) {
+                changeChecked();
+              },
+            )
           ],
         ),
       ),

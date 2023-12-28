@@ -44,6 +44,10 @@ class CustomTheme {
             minVerticalPadding: 10,
             minLeadingWidth: 10,
             dense: true),
+        checkboxTheme: CheckboxThemeData(
+            fillColor: MaterialStateProperty.all(colorScheme.primaryColor),
+            checkColor: MaterialStateProperty.all(colorScheme.secondaryColor),
+            side: const BorderSide(color: Colors.transparent)),
         useMaterial3: true,
         fontFamily: GoogleFonts.roboto().fontFamily);
   }
