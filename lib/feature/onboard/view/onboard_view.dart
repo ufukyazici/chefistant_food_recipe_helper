@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'onboard_page_view.dart';
+
 class OnBoardView extends StatefulWidget {
   const OnBoardView({super.key});
   @override
@@ -17,7 +19,11 @@ class _OnBoardViewState extends State<OnBoardView> {
       ),
       body: const Column(
         children: [
-          Expanded(child: )
+          Expanded(
+              child: OnBoardPageView(
+            imagePath: 'assets/images/ic_onboard1.png',
+            pageDescription: "asdasdasdasdasdasdas",
+          ))
         ],
       ),
     );
