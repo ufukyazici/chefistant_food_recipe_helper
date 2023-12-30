@@ -19,8 +19,14 @@ class _OnBoardViewState extends State<OnBoardView> {
       body: Column(
         children: [
           Expanded(
-              child: OnBoardPageView(
-                  imagePath: Images.ic_onboard_1.imagePath, pageDescription: 'onBoard.description1'.tr()))
+              child: PageView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return OnBoardPageView(
+                  imagePath: Images.ic_onboard_1.imagePath, pageDescription: 'onBoard.description${index + 1}'.tr());
+            },
+          ))
         ],
       ),
     );
