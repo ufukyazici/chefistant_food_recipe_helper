@@ -11,6 +11,13 @@ class OnBoardView extends StatefulWidget {
 }
 
 class _OnBoardViewState extends State<OnBoardView> {
+  late PageController _scrollController;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = PageController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +27,19 @@ class _OnBoardViewState extends State<OnBoardView> {
         children: [
           Expanded(
               child: PageView.builder(
+            controller: _scrollController,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 3,
             itemBuilder: (context, index) {
               return OnBoardPageView(
                   imagePath: Images.ic_onboard_1.imagePath, pageDescription: 'onBoard.description${index + 1}'.tr());
             },
-          ))
+          )),
+          ElevatedButton(
+              onPressed: () {
+                _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+              },
+              child: const Text('NEXT'))
         ],
       ),
     );
