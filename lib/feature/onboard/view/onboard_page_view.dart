@@ -10,7 +10,13 @@ class OnBoardPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const ProjectPadding.smallAll(),
-      child: Column(children: [Image.asset(imagePath), Text(pageDescription)]),
+      child: Column(children: [
+        Image.asset(imagePath),
+        Text(
+          pageDescription,
+          textAlign: TextAlign.center,
+        )
+      ]),
     );
   }
 }

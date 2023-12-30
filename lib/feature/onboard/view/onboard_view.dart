@@ -1,4 +1,5 @@
 import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_page_view.dart';
+import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/images.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,13 @@ class _OnBoardViewState extends State<OnBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red,
       appBar: projectAppbar(title: 'general.appName'.tr()),
-      body: const Column(
+      body: Column(
         children: [
           Expanded(
-              child: Expanded(
-                  child: OnBoardPageView(
-                      imagePath: "assets/images/ic_onboard1.png", pageDescription: "asdasdasdasdadadasd")))
+              child: OnBoardPageView(
+                  imagePath: Images.ic_onboard_1.imagePath, pageDescription: 'onBoard.description1'.tr()))
         ],
       ),
     );

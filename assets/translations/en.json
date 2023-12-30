@@ -3,7 +3,8 @@
         "appName":"Chefistant"
     },
     "onBoard":{
-        "title":"Welcome to the new version of the app",
-        "description":"This is a new version of the app. We hope you like it."
+        "description1":"In your journey with Chefistant, delicious recipes await as you take your first step into this culinary adventure! Choose your favorite recipe on the initial screen and kick off your cooking experience.",
+        "description2":"On the next screen, Chefistant guides you step by step, acting as your culinary companion. With each step, you are getting closer to perfect flavors, just like having a chef by your side.",
+        "description3":"As you master the kitchen with Chefistant, explore personalized recipe suggestions and tips tailored just for you. Unleash the joy of cooking with Chefistant and push the boundaries of your culinary world!"
     }
 }
