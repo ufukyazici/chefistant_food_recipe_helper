@@ -1,4 +1,7 @@
 {
+    "general":{
+        "appName":"Chefistant"
+    },
     "onBoard":{
         "title":"Uygulamanın yeni sürümüne hoş geldiniz",
         "description":"Bu uygulamanın yeni bir sürümüdür. Umarız beğenirsiniz."
