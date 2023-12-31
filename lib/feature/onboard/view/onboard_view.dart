@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardView extends StatefulWidget {
-  const OnBoardView({super.key});
+  const OnBoardView({Key? key}) : super(key: key);
+
   @override
   State<OnBoardView> createState() => _OnBoardViewState();
 }
 
 class _OnBoardViewState extends State<OnBoardView> {
   late PageController _scrollController;
+
   @override
   void initState() {
     super.initState();
@@ -30,42 +32,51 @@ class _OnBoardViewState extends State<OnBoardView> {
         body: Column(
           children: [
             Expanded(
-                child: PageView.builder(
-              controller: _scrollController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return OnBoardPageView(
-                    imagePath: Images.ic_onboard_1.imagePath, pageDescription: 'onBoard.description${index + 1}'.tr());
-              },
-            )),
-            BlocBuilder<OnBoardCubit, OnBoardState>(
-              builder: (context, state) {
-                return ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white),
-                    ),
-                    onPressed: () {
-                      _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
-                      context.read<OnBoardCubit>().incrementPageIndex();
-                    },
-                    child: BlocListener<OnBoardCubit, OnBoardState>(
-                      listener: (context, state) {
-                        state.isLastIndex;
-                      },
-                      child: Text(
-                        state.isLastIndex ? 'START' : 'NEXT',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium
-                            ?.copyWith(color: Colors.red, fontWeight: FontWeight.bold),
-                      ),
-                    ));
-              },
-            )
+              child: _buildPageView(),
+            ),
+            _buildNextButton(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPageView() {
+    return PageView.builder(
+      controller: _scrollController,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return OnBoardPageView(
+          imagePath: Images.ic_onboard_1.imagePath,
+          pageDescription: 'onBoard.description${index + 1}'.tr(),
+        );
+      },
+    );
+  }
+
+  Widget _buildNextButton() {
+    return BlocBuilder<OnBoardCubit, OnBoardState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+          ),
+          onPressed: () {
+            _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+            context.read<OnBoardCubit>().incrementPageIndex();
+          },
+          child: BlocListener<OnBoardCubit, OnBoardState>(
+            listener: (context, state) {
+              state.isLastIndex;
+            },
+            child: Text(
+              state.isLastIndex ? 'START' : 'NEXT',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+      },
     );
   }
 }
