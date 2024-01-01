@@ -2,6 +2,8 @@ import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_page_
 import 'package:chefistant_food_recipe_helper/feature/onboard/view_model/on_board_cubit.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/images.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
+import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
+import 'package:chefistant_food_recipe_helper/product/widget/padding/project_padding.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,13 +31,16 @@ class _OnBoardViewState extends State<OnBoardView> {
       child: Scaffold(
         backgroundColor: Colors.red,
         appBar: projectAppbar(title: 'general.appName'.tr()),
-        body: Column(
-          children: [
-            Expanded(
-              child: _buildPageView(),
-            ),
-            _buildNextButton(),
-          ],
+        body: Padding(
+          padding: const ProjectPadding.mediumAll(),
+          child: Column(
+            children: [
+              Expanded(
+                child: _buildPageView(),
+              ),
+              _buildNextButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -58,22 +63,17 @@ class _OnBoardViewState extends State<OnBoardView> {
   Widget _buildNextButton() {
     return BlocBuilder<OnBoardCubit, OnBoardState>(
       builder: (context, state) {
-        return ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-          ),
-          onPressed: () {
-            _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
-            context.read<OnBoardCubit>().incrementPageIndex();
+        return BlocListener<OnBoardCubit, OnBoardState>(
+          listener: (context, state) {
+            state.isLastIndex;
           },
-          child: BlocListener<OnBoardCubit, OnBoardState>(
-            listener: (context, state) {
-              state.isLastIndex;
+          child: ProjectDefaultButton(
+            buttonText: state.isLastIndex ? 'button.start'.tr() : 'button.next'.tr(),
+            isBackgroundWhite: false,
+            onPressed: () {
+              _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+              context.read<OnBoardCubit>().incrementPageIndex();
             },
-            child: Text(
-              state.isLastIndex ? 'START' : 'NEXT',
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.red, fontWeight: FontWeight.bold),
-            ),
           ),
         );
       },

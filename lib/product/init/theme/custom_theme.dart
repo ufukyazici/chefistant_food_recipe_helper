@@ -18,6 +18,7 @@ class CustomTheme {
             titleTextStyle: TextStyle(color: colorScheme.secondaryColor, fontSize: 20, fontWeight: FontWeight.bold)),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
+                textStyle: MaterialStateProperty.all(const TextStyle(fontWeight: FontWeight.bold)),
                 iconColor: MaterialStateProperty.all(colorScheme.secondaryColor),
                 foregroundColor: MaterialStateProperty.all(colorScheme.secondaryColor),
                 backgroundColor: MaterialStateProperty.all(colorScheme.primaryColor),
