@@ -45,6 +45,7 @@ class CustomTheme {
             minVerticalPadding: 10,
             minLeadingWidth: 10,
             dense: true),
+        dividerTheme: const DividerThemeData(indent: 10, thickness: 5),
         checkboxTheme: CheckboxThemeData(
             fillColor: MaterialStateProperty.all(colorScheme.primaryColor),
             checkColor: MaterialStateProperty.all(colorScheme.secondaryColor),

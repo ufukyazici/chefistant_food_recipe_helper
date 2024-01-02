@@ -38,31 +38,29 @@ class _OnBoardViewState extends State<OnBoardView> {
               Expanded(
                 child: _buildPageView(),
               ),
-              BlocSelector<OnBoardCubit, OnBoardState, int>(
-                selector: (state) {
-                  return state.pageIndex;
-                },
-                builder: (context, state) {
-                  return Row(
-                    children: [
-                      Expanded(
-                          child:
-                              Divider(indent: 10, color: state == 0 ? Colors.grey[850] : Colors.white, thickness: 5)),
-                      Expanded(
-                          child:
-                              Divider(indent: 10, color: state == 1 ? Colors.grey[850] : Colors.white, thickness: 5)),
-                      Expanded(
-                          child:
-                              Divider(indent: 10, color: state == 2 ? Colors.grey[850] : Colors.white, thickness: 5)),
-                    ],
-                  );
-                },
-              ),
+              _pageIndexDivider(),
               _buildNextButton(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  BlocSelector<OnBoardCubit, OnBoardState, int> _pageIndexDivider() {
+    return BlocSelector<OnBoardCubit, OnBoardState, int>(
+      selector: (state) {
+        return state.pageIndex;
+      },
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(child: Divider(color: state == 0 ? Colors.grey[850] : Colors.white)),
+            Expanded(child: Divider(color: state == 1 ? Colors.grey[850] : Colors.white)),
+            Expanded(child: Divider(color: state == 2 ? Colors.grey[850] : Colors.white)),
+          ],
+        );
+      },
     );
   }
 
