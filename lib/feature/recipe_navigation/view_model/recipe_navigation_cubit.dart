@@ -5,5 +5,4 @@ part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   RecipeNavigationCubit() : super(const RecipeNavigationState());
-  void _startTimer(int seconds) {}
 }

@@ -1,4 +1,4 @@
-import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_view.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/product/init/localization_init.dart';
 import 'package:chefistant_food_recipe_helper/product/init/theme/custom_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chefistant',
-      home: const OnBoardView(),
+      home: const RecipeNavigationView(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
