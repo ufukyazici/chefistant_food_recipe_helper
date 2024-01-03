@@ -1,6 +1,6 @@
-import 'dart:async';
-
+import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_model/recipe_navigation_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecipeNavigationView extends StatefulWidget {
   const RecipeNavigationView({super.key});
@@ -10,35 +10,30 @@ class RecipeNavigationView extends StatefulWidget {
 }
 
 class _RecipeNavigationViewState extends State<RecipeNavigationView> {
-  int _counter = 300;
-  late Timer _timer;
-  void startTimer() {
-    _counter = 300;
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_counter > 0) {
-        setState(() {
-          _counter--;
-        });
-      } else {
-        _timer.cancel();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("$_counter"),
-            ElevatedButton(
-                onPressed: () {
-                  startTimer();
+    return BlocProvider<RecipeNavigationCubit>(
+      create: (context) => RecipeNavigationCubit(),
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, String>(
+                selector: (state) {
+                  return state.time;
                 },
-                child: const Text("Start Timer"))
-          ],
+                builder: (context, state) {
+                  return InkWell(
+                    child: Text(state),
+                    onTap: () {
+                      context.read<RecipeNavigationCubit>().startTimer(900);
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
