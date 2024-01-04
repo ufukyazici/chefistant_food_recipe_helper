@@ -8,6 +8,7 @@ part 'recipe_navigation_state.dart';
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   RecipeNavigationCubit() : super(const RecipeNavigationState());
   late int remainingSeconds;
+  startRecipeNavigation() {}
 
   startTimer(int seconds) {
     remainingSeconds = seconds;
@@ -24,3 +25,10 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     });
   }
 }
+
+// class dummyData {
+//   final int duration;
+//   final String step;
+
+//   dummyData({required this.duration, required this.step});
+// }

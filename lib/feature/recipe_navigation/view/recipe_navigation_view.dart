@@ -21,13 +21,21 @@ class _RecipeNavigationViewState extends State<RecipeNavigationView> {
             children: [
               BlocSelector<RecipeNavigationCubit, RecipeNavigationState, String>(
                 selector: (state) {
+                  return state.currentStep;
+                },
+                builder: (context, state) {
+                  return Text(state);
+                },
+              ),
+              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, String>(
+                selector: (state) {
                   return state.time;
                 },
                 builder: (context, state) {
                   return InkWell(
                     child: Text(state),
                     onTap: () {
-                      context.read<RecipeNavigationCubit>().startTimer(900);
+                      context.read<RecipeNavigationCubit>().startRecipeNavigation();
                     },
                   );
                 },
