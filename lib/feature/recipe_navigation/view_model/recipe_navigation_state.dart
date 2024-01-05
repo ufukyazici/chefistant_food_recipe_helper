@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 part of 'recipe_navigation_cubit.dart';
 
 class RecipeNavigationState extends Equatable {
@@ -8,7 +9,7 @@ class RecipeNavigationState extends Equatable {
   final String currentStep;
 
   @override
-  List<Object> get props => [time];
+  List<Object> get props => [time, timerStatus, currentStep];
 
   RecipeNavigationState copyWith({
     String? time,
