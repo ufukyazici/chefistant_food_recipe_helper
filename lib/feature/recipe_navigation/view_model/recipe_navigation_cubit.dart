@@ -8,37 +8,36 @@ part 'recipe_navigation_state.dart';
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   RecipeNavigationCubit() : super(const RecipeNavigationState());
   late int remainingSeconds;
-  List<dummyData> items = [
-    dummyData(duration: 10, step: "1111111111111"),
-    dummyData(duration: 20, step: "2222222222"),
-    dummyData(duration: 30, step: "333333333"),
-    dummyData(duration: 40, step: "4444444"),
-    dummyData(duration: 50, step: "5555555"),
-    dummyData(duration: 60, step: "66666666"),
-    dummyData(duration: 70, step: "77777777"),
-    dummyData(duration: 80, step: "888888888"),
-    dummyData(duration: 90, step: "999999"),
-    dummyData(duration: 100, step: "1000000000"),
+  List<DummyData> items = [
+    DummyData(duration: 10, step: "1111111111111"),
+    DummyData(duration: 20, step: "2222222222"),
+    DummyData(duration: 30, step: "333333333"),
+    DummyData(duration: 40, step: "4444444"),
+    DummyData(duration: 50, step: "5555555"),
+    DummyData(duration: 60, step: "66666666"),
+    DummyData(duration: 70, step: "77777777"),
+    DummyData(duration: 80, step: "888888888"),
+    DummyData(duration: 90, step: "999999"),
+    DummyData(duration: 100, step: "1000000000"),
   ];
-  void incrementIndexAndStart(int index) async {}
-
-  void startRecipe(int index) async {
-    for (var i = 0; i < items.length; i++) {
-      emit(state.copyWith(currentStep: items[i].step));
-      startTimer(items[index].duration);
+  void incrementIndexAndStart() async {
+    if (state.currentIndex == 0) {
+      emit(state.copyWith(currentStep: items[state.currentIndex].step));
+      await startTimer(items[state.currentIndex].duration);
+      emit(state.copyWith(currentIndex: state.currentIndex + 1));
+    } else if (state.currentIndex != 0 && state.currentIndex < (items.length - 1)) {
+      emit(state.copyWith(currentStep: items[state.currentIndex].step));
+      await startTimer(items[state.currentIndex].duration);
     }
-    // emit(state.copyWith(currentStep: items[index].step));
-    // await startTimer(items[index].duration);
-    // startRecipe(index + 1);
   }
 
-  void startTimer(int seconds) {
+  Future<void> startTimer(int seconds) async {
     state.copyWith(timerStatus: true);
     remainingSeconds = seconds;
-    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (remainingSeconds == 0) {
+        emit(state.copyWith(time: "00:00"));
         timer.cancel();
-        state.copyWith(timerStatus: false);
       } else {
         int minutes = remainingSeconds ~/ 60;
         int seconds = remainingSeconds % 60;
@@ -50,9 +49,9 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   }
 }
 
-class dummyData {
+class DummyData {
   final int duration;
   final String step;
 
-  dummyData({required this.duration, required this.step});
+  DummyData({required this.duration, required this.step});
 }

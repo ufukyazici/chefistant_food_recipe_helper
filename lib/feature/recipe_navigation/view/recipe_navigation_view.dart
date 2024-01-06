@@ -35,7 +35,7 @@ class _RecipeNavigationViewState extends State<RecipeNavigationView> {
                   return InkWell(
                     child: Text(state),
                     onTap: () {
-                      context.read<RecipeNavigationCubit>().startRecipe(0);
+                      context.read<RecipeNavigationCubit>().incrementIndexAndStart();
                     },
                   );
                 },

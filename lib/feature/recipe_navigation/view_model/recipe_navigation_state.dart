@@ -3,10 +3,12 @@
 part of 'recipe_navigation_cubit.dart';
 
 class RecipeNavigationState extends Equatable {
-  const RecipeNavigationState({this.time = '00:00', this.timerStatus = false, this.currentStep = ''});
+  const RecipeNavigationState(
+      {this.time = '00:00', this.timerStatus = false, this.currentStep = '', this.currentIndex = 0});
   final String time;
   final bool timerStatus;
   final String currentStep;
+  final int currentIndex;
 
   @override
   List<Object> get props => [time, timerStatus, currentStep];
@@ -15,11 +17,13 @@ class RecipeNavigationState extends Equatable {
     String? time,
     bool? timerStatus,
     String? currentStep,
+    int? currentIndex,
   }) {
     return RecipeNavigationState(
       time: time ?? this.time,
       timerStatus: timerStatus ?? this.timerStatus,
       currentStep: currentStep ?? this.currentStep,
+      currentIndex: currentIndex ?? this.currentIndex,
     );
   }
 }
