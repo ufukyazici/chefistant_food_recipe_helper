@@ -32,14 +32,21 @@ class _RecipeNavigationViewState extends State<RecipeNavigationView> {
                   return state.time;
                 },
                 builder: (context, state) {
-                  return InkWell(
-                    child: Text(state),
-                    onTap: () {
-                      context.read<RecipeNavigationCubit>().incrementIndexAndStart();
-                    },
-                  );
+                  return Text(state);
                 },
               ),
+              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, int>(
+                selector: (state) {
+                  return state.currentIndex;
+                },
+                builder: (context, state) {
+                  return ElevatedButton(
+                      onPressed: () {
+                        context.read<RecipeNavigationCubit>().incrementIndexAndStart(state);
+                      },
+                      child: Text(state == 0 ? "Tarife Başla" : "Sonraki Adım"));
+                },
+              )
             ],
           ),
         ),

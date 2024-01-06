@@ -20,19 +20,12 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     DummyData(duration: 90, step: "999999"),
     DummyData(duration: 100, step: "1000000000"),
   ];
-  void incrementIndexAndStart() async {
-    if (state.currentIndex == 0) {
-      emit(state.copyWith(currentStep: items[state.currentIndex].step));
-      await startTimer(items[state.currentIndex].duration);
-      emit(state.copyWith(currentIndex: state.currentIndex + 1));
-    } else if (state.currentIndex != 0 && state.currentIndex < (items.length - 1)) {
-      emit(state.copyWith(currentStep: items[state.currentIndex].step));
-      await startTimer(items[state.currentIndex].duration);
-    }
+  void incrementIndexAndStart(int index) async {
+    emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1));
+    await startTimer(items[index].duration);
   }
 
   Future<void> startTimer(int seconds) async {
-    state.copyWith(timerStatus: true);
     remainingSeconds = seconds;
     Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (remainingSeconds == 0) {
