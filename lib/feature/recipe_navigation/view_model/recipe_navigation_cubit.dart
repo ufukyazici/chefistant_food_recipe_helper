@@ -21,7 +21,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     DummyData(duration: 100, step: "1000000000"),
   ];
   void incrementIndexAndStart(int index) async {
-    emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1));
+    emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1, timerStatus: true));
     await startTimer(items[index].duration);
   }
 
@@ -29,7 +29,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     remainingSeconds = seconds;
     Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (remainingSeconds == 0) {
-        emit(state.copyWith(time: "00:00"));
+        emit(state.copyWith(time: "00:00", timerStatus: false));
         timer.cancel();
       } else {
         int minutes = remainingSeconds ~/ 60;

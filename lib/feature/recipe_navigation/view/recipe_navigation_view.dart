@@ -2,55 +2,71 @@ import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_mod
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RecipeNavigationView extends StatefulWidget {
+class RecipeNavigationView extends StatelessWidget {
   const RecipeNavigationView({super.key});
 
-  @override
-  State<RecipeNavigationView> createState() => _RecipeNavigationViewState();
-}
-
-class _RecipeNavigationViewState extends State<RecipeNavigationView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(
       create: (context) => RecipeNavigationCubit(),
-      child: Scaffold(
+      child: const Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, String>(
-                selector: (state) {
-                  return state.currentStep;
-                },
-                builder: (context, state) {
-                  return Text(state);
-                },
-              ),
-              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, String>(
-                selector: (state) {
-                  return state.time;
-                },
-                builder: (context, state) {
-                  return Text(state);
-                },
-              ),
-              BlocSelector<RecipeNavigationCubit, RecipeNavigationState, int>(
-                selector: (state) {
-                  return state.currentIndex;
-                },
-                builder: (context, state) {
-                  return ElevatedButton(
-                      onPressed: () {
-                        context.read<RecipeNavigationCubit>().incrementIndexAndStart(state);
-                      },
-                      child: Text(state == 0 ? "Tarife Başla" : "Sonraki Adım"));
-                },
-              )
+              RecipeStepText(),
+              RecipeTimeText(),
+              RecipeNavigationButton(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class RecipeStepText extends StatelessWidget {
+  const RecipeStepText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
+      builder: (context, state) {
+        return Text(state.currentStep);
+      },
+    );
+  }
+}
+
+class RecipeTimeText extends StatelessWidget {
+  const RecipeTimeText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
+      builder: (context, state) {
+        return Text(state.time);
+      },
+    );
+  }
+}
+
+class RecipeNavigationButton extends StatelessWidget {
+  const RecipeNavigationButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
+      builder: (context, state) {
+        return ElevatedButton(
+          onPressed: () {
+            if (!state.timerStatus) {
+              context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+            }
+          },
+          child: Text(state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım"),
+        );
+      },
     );
   }
 }
