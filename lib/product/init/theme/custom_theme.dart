@@ -50,6 +50,7 @@ class CustomTheme {
             fillColor: MaterialStateProperty.all(colorScheme.primaryColor),
             checkColor: MaterialStateProperty.all(colorScheme.secondaryColor),
             side: const BorderSide(color: Colors.transparent)),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(circularTrackColor: Colors.white, color: Colors.grey),
         useMaterial3: true,
         fontFamily: GoogleFonts.roboto().fontFamily);
   }

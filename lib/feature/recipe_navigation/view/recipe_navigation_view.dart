@@ -58,13 +58,17 @@ class RecipeNavigationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
       builder: (context, state) {
-        return ElevatedButton(
-          onPressed: () {
-            if (!state.timerStatus) {
-              context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
-            }
-          },
-          child: Text(state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım"),
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          height: state.timerStatus ? 0 : 35,
+          child: ElevatedButton(
+            onPressed: () {
+              state.timerStatus
+                  ? null
+                  : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+            },
+            child: Text(state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım"),
+          ),
         );
       },
     );
