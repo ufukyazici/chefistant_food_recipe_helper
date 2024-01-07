@@ -3,8 +3,7 @@
 part of 'recipe_navigation_cubit.dart';
 
 class RecipeNavigationState extends Equatable {
-  const RecipeNavigationState(
-      {this.time = '00:00', this.timerStatus = false, this.currentStep = '', this.currentIndex = 0});
+  const RecipeNavigationState({this.time = '', this.timerStatus = false, this.currentStep = '', this.currentIndex = 0});
   final String time;
   final bool timerStatus;
   final String currentStep;

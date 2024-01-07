@@ -1,5 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_page_view.dart';
 import 'package:chefistant_food_recipe_helper/feature/onboard/view_model/on_board_cubit.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/images.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
@@ -7,6 +8,7 @@ import 'package:chefistant_food_recipe_helper/product/widget/padding/project_pad
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kartal/kartal.dart';
 
 class OnBoardView extends StatefulWidget {
   const OnBoardView({Key? key}) : super(key: key);
@@ -89,8 +91,12 @@ class _OnBoardViewState extends State<OnBoardView> {
             buttonText: state.isLastIndex ? 'button.start'.tr() : 'button.next'.tr(),
             isBackgroundWhite: false,
             onPressed: () {
-              _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
-              context.read<OnBoardCubit>().incrementPageIndex();
+              if (state.isLastIndex) {
+                context.route.navigateToPage(const RecipeNavigationView());
+              } else {
+                _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
+                context.read<OnBoardCubit>().incrementPageIndex();
+              }
             },
           ),
         );
