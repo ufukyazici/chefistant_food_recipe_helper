@@ -1,5 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_model/recipe_navigation_cubit.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
+import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,13 +65,14 @@ class RecipeNavigationButton extends StatelessWidget {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           height: state.timerStatus ? 0 : 35,
-          child: ElevatedButton(
+          child: ProjectDefaultButton(
+            buttonText: state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım",
+            isBackgroundWhite: true,
             onPressed: () {
               state.timerStatus
                   ? null
                   : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
             },
-            child: Text(state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım"),
           ),
         );
       },
