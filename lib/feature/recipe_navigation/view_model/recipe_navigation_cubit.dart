@@ -15,6 +15,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     DummyData(duration: 40, step: "Önceden ısıtılmış 180 derece fırında 30-35 dakika pişirin."),
     DummyData(duration: 50, step: "Fırından çıkarıp soğumaya bırakın.")
   ];
+
   void incrementIndexAndStart(int index) async {
     if (index < items.length) {
       emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1, timerStatus: true));
