@@ -20,7 +20,14 @@ class RecipeNavigationView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset(LottieFiles.lottie_timer.lottiePath),
+              BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
+                builder: (context, state) {
+                  return AnimatedContainer(
+                      height: state.timerStatus ? 400 : 0,
+                      duration: const Duration(seconds: 1),
+                      child: Lottie.asset(LottieFiles.lottie_timer.lottiePath));
+                },
+              ),
               const RecipeStepText(),
               const RecipeTimeText(),
               const RecipeNavigationButton(),
