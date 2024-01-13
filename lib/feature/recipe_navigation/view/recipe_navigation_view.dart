@@ -59,23 +59,7 @@ class RecipeTimeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
       builder: (context, state) {
-        return Stack(children: [
-          Container(
-            color: Colors.red,
-            height: state.timerStatus ? 100 : 0,
-            width: state.timerStatus ? 100 : 0,
-          ),
-          Positioned(
-            left: 5,
-            top: 30,
-            bottom: 5,
-            right: 5,
-            child: Text(
-              state.time,
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.white),
-            ),
-          ),
-        ]);
+        return Text(state.time);
       },
     );
   }
