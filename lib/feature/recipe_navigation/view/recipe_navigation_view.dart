@@ -16,25 +16,36 @@ class RecipeNavigationView extends StatelessWidget {
       create: (context) => RecipeNavigationCubit(),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
-        body: Center(
+        body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
-                builder: (context, state) {
-                  return AnimatedContainer(
-                      height: state.timerStatus ? 400 : 0,
-                      duration: const Duration(seconds: 1),
-                      child: Lottie.asset(LottieFiles.lottie_timer.lottiePath));
-                },
-              ),
-              const RecipeStepText(),
-              const RecipeTimeText(),
-              const RecipeNavigationButton(),
+              RecipeLottieWidget(),
+              RecipeStepText(),
+              RecipeTimeText(),
+              RecipeNavigationButton(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class RecipeLottieWidget extends StatelessWidget {
+  const RecipeLottieWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
+      builder: (context, state) {
+        return AnimatedContainer(
+            height: state.timerStatus ? 400 : 0,
+            duration: const Duration(seconds: 1),
+            child: Lottie.asset(LottieFiles.lottie_timer.lottiePath));
+      },
     );
   }
 }
