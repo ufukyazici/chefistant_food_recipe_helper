@@ -87,7 +87,8 @@ class RecipeNavigationButton extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           height: state.timerStatus ? 0 : 35,
           child: ProjectDefaultButton(
-            buttonText: state.currentIndex == 0 ? "Tarife Başla" : "Sonraki Adım",
+            buttonText:
+                state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
             onPressed: () {
               state.timerStatus

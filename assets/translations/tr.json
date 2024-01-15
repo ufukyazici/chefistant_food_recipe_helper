@@ -7,6 +7,10 @@
         "description2":"Bir sonraki ekranda, adım adım rehberlikle tarifini oluştururken Chefistant seninle adeta bir şef gibi. Her adımda mükemmel lezzetlere bir adım daha yaklaşıyorsun!",
         "description3":"Chefistant ile mutfakta ustalaştıkça, sana özel tarif önerileri ve püf noktalarıyla lezzet dünyanda sınırları zorla. Yemek yapmanın keyfini Chefistant ile keşfet!"
     },
+    "recipeNavigation":{
+        "startRecipe":"Tarife Başla",
+        "nextStep":"Sonraki Adım"
+    },
     "button":{
         "next":"İleri",
         "start":"Başla"
