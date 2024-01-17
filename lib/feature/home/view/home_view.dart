@@ -1,3 +1,4 @@
+import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -10,6 +11,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: projectAppbar(title: "Chefistant"),
+    );
   }
 }
