@@ -7,6 +7,10 @@
         "description2":"On the next screen, Chefistant guides you step by step, acting as your culinary companion. With each step, you are getting closer to perfect flavors, just like having a chef by your side.",
         "description3":"As you master the kitchen with Chefistant, explore personalized recipe suggestions and tips tailored just for you. Unleash the joy of cooking with Chefistant and push the boundaries of your culinary world!"
     },
+    "recipeNavigation":{
+        "startRecipe":"Tarife Başla",
+        "nextStep":"Sonraki Adım"
+    },
     "button":{
         "next":"Next",
         "start":"Start"
