@@ -1,0 +1,32 @@
+[
+    {
+        "id": "0001",
+        "type": "soup",
+        "name": "Mercimek Çorbası",
+        "time":"35-40",
+        "ingredients": {
+            "ingredient": [
+                {
+                    "id": "1001",
+                    "type": "Kırmızı mercimek"
+                },
+                {
+                    "id": "1002",
+                    "type": "Sıvı yağ"
+                },
+                {
+                    "id": "1003",
+                    "type": "Soğan"
+                },
+                {
+                    "id": "1004",
+                    "type": "Havuç"
+                },
+                {
+                    "id": "1005",
+                    "type": "Patates"
+                }
+            ]
+        }
+    }
+]
