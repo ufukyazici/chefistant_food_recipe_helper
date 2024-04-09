@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844348610557",
+    "project_id": "chefistant",
+    "storage_bucket": "chefistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844348610557:android:f763dec3990a5f8ca1ab94",
+        "android_client_info": {
+          "package_name": "com.example.chefistant_food_recipe_helper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgLkYUDbYNxranXXAjUIXC00s24dRwQQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
