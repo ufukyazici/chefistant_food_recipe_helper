@@ -1,6 +1,6 @@
+import 'package:chefistant_food_recipe_helper/feature/home/view/home_view.dart';
 import 'package:chefistant_food_recipe_helper/feature/onboard/view/onboard_page_view.dart';
 import 'package:chefistant_food_recipe_helper/feature/onboard/view_model/on_board_cubit.dart';
-import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/images.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
@@ -92,7 +92,7 @@ class _OnBoardViewState extends State<OnBoardView> {
             isBackgroundWhite: false,
             onPressed: () {
               if (state.isLastIndex) {
-                context.route.navigateToPage(const RecipeNavigationView());
+                context.route.navigateToPage(const HomeView());
               } else {
                 _scrollController.nextPage(duration: const Duration(seconds: 1), curve: Curves.linear);
                 context.read<OnBoardCubit>().incrementPageIndex();

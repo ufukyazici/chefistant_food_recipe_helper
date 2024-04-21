@@ -1,29 +1,24 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit() : super(const RecipeNavigationState());
+  RecipeNavigationCubit({required this.items}) : super(const RecipeNavigationState());
   late int remainingSeconds;
-  List<DummyData> items = [
-    DummyData(duration: 10, step: "Yumurta ve sütü bir kapta çırpın."),
-    DummyData(duration: 20, step: "Un, vanilya, kabartma tozu ve tuzu ekleyip karıştırın."),
-    DummyData(duration: 30, step: "Karışımı yağlanmış bir fırın kabına dökün."),
-    DummyData(duration: 40, step: "Önceden ısıtılmış 180 derece fırında 30-35 dakika pişirin."),
-    DummyData(duration: 50, step: "Fırından çıkarıp soğumaya bırakın.")
-  ];
+  List<RecipeNavigation> items;
 
   void incrementIndexAndStart(int index) async {
     if (index < items.length) {
       emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1, timerStatus: true));
-      await startTimer(items[index].duration);
+      await startTimer(items[index].duration ?? 0);
     }
   }
 
-  Future<void> startTimer(int seconds) async {
+  Future<void> startTimer(int seconds, {bool verification = false}) async {
     remainingSeconds = seconds;
     Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (remainingSeconds == 0) {
@@ -38,11 +33,4 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
       }
     });
   }
-}
-
-class DummyData {
-  final int duration;
-  final String step;
-
-  DummyData({required this.duration, required this.step});
 }

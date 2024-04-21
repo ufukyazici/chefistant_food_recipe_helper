@@ -1,3 +1,4 @@
+import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_model/recipe_navigation_cubit.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/lotties.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
@@ -8,12 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class RecipeNavigationView extends StatelessWidget {
-  const RecipeNavigationView({super.key});
+  const RecipeNavigationView({super.key, required this.recipeNavigation});
+  final List<RecipeNavigation> recipeNavigation;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(
-      create: (context) => RecipeNavigationCubit(),
+      create: (context) => RecipeNavigationCubit(items: recipeNavigation),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
         body: const Center(
@@ -85,15 +87,16 @@ class RecipeNavigationButton extends StatelessWidget {
       builder: (context, state) {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 500),
-          height: state.timerStatus ? 0 : 35,
+          height: state.timerStatus ? 35 : 35,
           child: ProjectDefaultButton(
             buttonText:
                 state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
             onPressed: () {
-              state.timerStatus
-                  ? null
-                  : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+              // state.timerStatus
+              //     ? null
+              //     : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+              context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
             },
           ),
         );
