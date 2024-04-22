@@ -1,5 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/home/service/firebase.dart';
+import 'package:chefistant_food_recipe_helper/feature/multiple_recipe_navigation/view/multiple_recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,17 @@ class _HomeViewState extends State<HomeView> {
                 );
               },
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    return MultipleRecipeNavigationView(
+                      recipeNavigation0: recipes?[0].recipeNavigation ?? [],
+                      recipeNavigation1: recipes?[1].recipeNavigation ?? [],
+                      recipeNavigation2: recipes?[2].recipeNavigation ?? [],
+                    );
+                  }));
+                },
+                child: const Text('MultipleRecipes'))
           ]),
         ),
       ),
