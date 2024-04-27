@@ -1,8 +1,7 @@
 import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
-import 'package:chefistant_food_recipe_helper/feature/home/service/firebase.dart';
-import 'package:chefistant_food_recipe_helper/feature/multiple_recipe_navigation/view/multiple_recipe_navigation_view.dart';
-import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
+import 'package:chefistant_food_recipe_helper/feature/home/service/firebase_service.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,19 +13,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<RecipeModel>? recipes;
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
 
-  Future fetchData() async {
-    recipes = await Firebase().getRecipes();
-    setState(() {});
-  }
-
-  var text1 = "";
-  var text2 = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,36 +21,35 @@ class _HomeViewState extends State<HomeView> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: recipes?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(recipes?[index].recipe?.name ?? ""),
-                    subtitle: Text(recipes?[index].recipe?.description ?? ""),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return RecipeNavigationView(recipeNavigation: recipes?[index].recipeNavigation ?? []);
-                        },
-                      ));
+            StreamBuilder(
+              stream: FirebaseService().getRecipesStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasData) {
+                  List recipes = snapshot.data!.docs;
+                  List<RecipeModel> recipe = recipes.map((document) => RecipeModel.fromJson(document.data())).toList();
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 200 / 250),
+                    itemCount: recipe.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot document = recipes[index];
+                      return Card(
+                        child: ListTile(
+                          title: Text(document.id.toString()),
+                          subtitle: Text(recipe[index].recipe?.description ?? ""),
+                        ),
+                      );
                     },
-                  ),
-                );
+                  );
+                } else {
+                  return const Text("No data available");
+                }
               },
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                    return MultipleRecipeNavigationView(
-                      recipeNavigation0: recipes?[0].recipeNavigation ?? [],
-                      recipeNavigation1: recipes?[1].recipeNavigation ?? [],
-                      recipeNavigation2: recipes?[2].recipeNavigation ?? [],
-                    );
-                  }));
-                },
-                child: const Text('MultipleRecipes'))
+            )
           ]),
         ),
       ),
