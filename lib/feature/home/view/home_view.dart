@@ -1,6 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/home/service/firebase_service.dart';
-import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_details/view/recipe_details_view.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,8 @@ class _HomeViewState extends State<HomeView> {
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return RecipeNavigationView(recipeNavigation: recipe[index].recipeNavigation ?? []);
+                                return RecipeDetailsView(
+                                    recipe: recipe[index], ingredients: recipe[index].recipeDetails!.ingredients ?? []);
                               },
                             ));
                           },
