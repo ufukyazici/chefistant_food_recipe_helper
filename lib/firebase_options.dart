@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -71,5 +68,14 @@ class DefaultFirebaseOptions {
     projectId: 'chefistant',
     storageBucket: 'chefistant.appspot.com',
     iosBundleId: 'com.example.chefistantFoodRecipeHelper',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDZB62zbUyWT0QhqyXsS-ua2WVOw611IqM',
+    appId: '1:844348610557:ios:6b8d045fcf43743da1ab94',
+    messagingSenderId: '844348610557',
+    projectId: 'chefistant',
+    storageBucket: 'chefistant.appspot.com',
+    iosBundleId: 'com.example.chefistantFoodRecipeHelper.RunnerTests',
   );
 }
