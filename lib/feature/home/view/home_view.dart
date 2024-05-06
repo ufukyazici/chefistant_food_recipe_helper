@@ -13,6 +13,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final IRecipeService _service = RecipeService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
         child: Center(
           child: Column(children: [
             StreamBuilder(
-              stream: RecipeService().getRecipesStream(),
+              stream: _service.getRecipes(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

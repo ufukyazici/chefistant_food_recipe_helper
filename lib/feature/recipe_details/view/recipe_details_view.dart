@@ -1,11 +1,20 @@
+import 'package:chefistant_food_recipe_helper/feature/home/service/recipe_service.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 
 class RecipeDetailsView extends StatelessWidget {
-  const RecipeDetailsView({super.key, required this.documentId});
+  RecipeDetailsView({super.key, required this.documentId});
   final String documentId;
+  final IRecipeService _service = RecipeService();
+  late final RecipeNavigationModel recipeNavigation;
+  getRecipeNavigation(String documentId) async {
+    recipeNavigation = await _service.getRecipeNavigation(documentId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +37,10 @@ class RecipeDetailsView extends StatelessWidget {
               ProjectDefaultButton(
                 buttonText: "Start recipe",
                 isBackgroundWhite: true,
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return RecipeNavigationView(documentId: documentId);
-                    },
-                  ));
+                onPressed: () async {
+                  await getRecipeNavigation(documentId);
+                  if (!context.mounted) return;
+                  context.route.navigateToPage(RecipeNavigationView(recipeNavigation: recipeNavigation));
                 },
               )
             ],
