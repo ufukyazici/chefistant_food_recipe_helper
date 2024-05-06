@@ -1,20 +1,26 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
+import 'package:chefistant_food_recipe_helper/feature/home/service/recipe_service.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.items}) : super(const RecipeNavigationState());
+  RecipeNavigationCubit(this.documentId) : super(const RecipeNavigationState());
   late int remainingSeconds;
-  List<RecipeNavigation> items;
+  final String documentId;
+  late RecipeNavigationModel items;
+  Future<void> fetchRecipeNavigation(documentId) async {
+    items = await RecipeService().getRecipeNavigation(documentId);
+    print(items.steps?[0].step);
+  }
 
   void incrementIndexAndStart(int index) async {
-    if (index < items.length) {
-      emit(state.copyWith(currentStep: items[index].step, currentIndex: index + 1, timerStatus: true));
-      await startTimer(items[index].duration ?? 0);
+    if (index < items.steps!.length) {
+      emit(state.copyWith(currentStep: items.steps?[index].step, currentIndex: index + 1, timerStatus: true));
+      await startTimer(items.steps?[index].duration ?? 0);
     }
   }
 

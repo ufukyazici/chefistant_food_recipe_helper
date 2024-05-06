@@ -2,17 +2,8 @@
 part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
-  const HomeState({this.recipes = const []});
+  const HomeState();
 
-  final List<RecipeModel> recipes;
   @override
-  List<Object> get props => [recipes];
-
-  HomeState copyWith({
-    List<RecipeModel>? recipes,
-  }) {
-    return HomeState(
-      recipes: recipes ?? this.recipes,
-    );
-  }
+  List<Object> get props => [];
 }

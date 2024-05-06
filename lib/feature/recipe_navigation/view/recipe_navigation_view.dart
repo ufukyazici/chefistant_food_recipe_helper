@@ -1,4 +1,3 @@
-import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_model/recipe_navigation_cubit.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/lotties.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
@@ -9,23 +8,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class RecipeNavigationView extends StatelessWidget {
-  const RecipeNavigationView({super.key, required this.recipeNavigation});
-  final List<RecipeNavigation> recipeNavigation;
+  const RecipeNavigationView({super.key, required this.documentId});
+  final String documentId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(
-      create: (context) => RecipeNavigationCubit(items: recipeNavigation),
+      create: (context) => RecipeNavigationCubit(documentId),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              RecipeLottieWidget(),
-              RecipeStepText(),
-              RecipeTimeText(),
-              RecipeNavigationButton(),
+              const RecipeLottieWidget(),
+              const RecipeStepText(),
+              const RecipeTimeText(),
+              RecipeNavigationButton(documentId: documentId),
             ],
           ),
         ),
@@ -79,8 +78,8 @@ class RecipeTimeText extends StatelessWidget {
 }
 
 class RecipeNavigationButton extends StatelessWidget {
-  const RecipeNavigationButton({super.key});
-
+  const RecipeNavigationButton({super.key, required this.documentId});
+  final String documentId;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
@@ -92,10 +91,11 @@ class RecipeNavigationButton extends StatelessWidget {
             buttonText:
                 state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
-            onPressed: () {
+            onPressed: () async {
               // state.timerStatus
               //     ? null
               //     : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+              await context.read<RecipeNavigationCubit>().fetchRecipeNavigation(documentId);
               context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
             },
           ),
