@@ -40,7 +40,8 @@ class RecipeDetailsView extends StatelessWidget {
                 onPressed: () async {
                   await getRecipeNavigation(documentId);
                   if (!context.mounted) return;
-                  context.route.navigateToPage(RecipeNavigationView(recipeNavigation: recipeNavigation));
+                  context.route
+                      .navigateToPage(RecipeNavigationView(recipeNavigation: recipeNavigation, documentId: documentId));
                 },
               )
             ],

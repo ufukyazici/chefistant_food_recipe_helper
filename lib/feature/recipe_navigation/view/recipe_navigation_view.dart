@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class RecipeNavigationView extends StatelessWidget {
-  const RecipeNavigationView({super.key, required this.recipeNavigation});
+  const RecipeNavigationView({super.key, required this.recipeNavigation, required this.documentId});
   final RecipeNavigationModel recipeNavigation;
+  final String documentId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(

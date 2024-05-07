@@ -33,23 +33,28 @@ class _HomeViewState extends State<HomeView> {
                       recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 140 / 150),
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 140 / 160),
                     itemCount: recipe.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       DocumentSnapshot document = recipes[index];
                       final documentId = document.id;
-                      return Card(
-                        child: ListTile(
-                          title: Text(recipe[index].name ?? ""),
-                          subtitle: Text(recipe[index].description ?? ""),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return RecipeDetailsView(documentId: documentId);
-                              },
-                            ));
-                          },
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return RecipeDetailsView(documentId: documentId);
+                            },
+                          ));
+                        },
+                        child: Card(
+                          child: Column(
+                            children: [
+                              Image.network(recipe[index].imageUrl ?? "", fit: BoxFit.fill),
+                              Text(recipe[index].name ?? ""),
+                              Text(recipe[index].duration.toString()),
+                            ],
+                          ),
                         ),
                       );
                     },

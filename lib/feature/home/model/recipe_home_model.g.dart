@@ -11,7 +11,7 @@ RecipeHomeModel _$RecipeHomeModelFromJson(Map<String, dynamic> json) => RecipeHo
       description: json['description'] as String?,
       category: json['category'] as String?,
       duration: json['duration'] as int?,
-      imageUrl: json['imageUrl'] as String?,
+      imageUrl: json['image-url'] as String?,
     );
 
 Map<String, dynamic> _$RecipeHomeModelToJson(RecipeHomeModel instance) => <String, dynamic>{
