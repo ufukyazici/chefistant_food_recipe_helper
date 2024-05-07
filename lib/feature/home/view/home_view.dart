@@ -2,6 +2,7 @@ import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_home_mod
 import 'package:chefistant_food_recipe_helper/feature/home/service/recipe_service.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_details/view/recipe_details_view.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
+import 'package:chefistant_food_recipe_helper/product/widget/padding/project_padding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
                       recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 140 / 160),
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 150 / 188),
                     itemCount: recipe.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -48,12 +49,25 @@ class _HomeViewState extends State<HomeView> {
                           ));
                         },
                         child: Card(
-                          child: Column(
-                            children: [
-                              Image.network(recipe[index].imageUrl ?? "", fit: BoxFit.fill),
-                              Text(recipe[index].name ?? ""),
-                              Text(recipe[index].duration.toString()),
-                            ],
+                          child: Padding(
+                            padding: const ProjectPadding.smallAll(),
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                    child: Image.network(recipe[index].imageUrl ?? "",
+                                        fit: BoxFit.fill, height: 120, width: 120)),
+                                Padding(
+                                  padding: const ProjectPadding.smallAll(),
+                                  child: Text(
+                                    recipe[index].name ?? "",
+                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white),
+                                  ),
+                                ),
+                                Text(recipe[index].duration.toString(),
+                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white)),
+                              ],
+                            ),
                           ),
                         ),
                       );

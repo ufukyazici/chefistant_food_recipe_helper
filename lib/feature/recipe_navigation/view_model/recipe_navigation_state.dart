@@ -19,10 +19,9 @@ class RecipeNavigationState extends Equatable {
     int? currentIndex,
   }) {
     return RecipeNavigationState(
-      time: time ?? this.time,
-      timerStatus: timerStatus ?? this.timerStatus,
-      currentStep: currentStep ?? this.currentStep,
-      currentIndex: currentIndex ?? this.currentIndex,
-    );
+        time: time ?? this.time,
+        timerStatus: timerStatus ?? this.timerStatus,
+        currentStep: currentStep ?? this.currentStep,
+        currentIndex: currentIndex ?? this.currentIndex);
   }
 }

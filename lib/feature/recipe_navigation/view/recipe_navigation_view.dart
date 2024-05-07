@@ -91,10 +91,13 @@ class RecipeNavigationButton extends StatelessWidget {
             buttonText:
                 state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
-            onPressed: () async {
+            onPressed: () {
               // state.timerStatus
               //     ? null
               //     : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+              if (state.currentIndex != 0) {
+                context.read<RecipeNavigationCubit>().cancelTimer();
+              }
               context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
             },
           ),

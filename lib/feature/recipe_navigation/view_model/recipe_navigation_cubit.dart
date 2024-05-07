@@ -10,9 +10,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
-  // Future<void> fetchRecipeNavigation(documentId) async {
-  //   items = await RecipeService().getRecipeNavigation(documentId);
-  // }
+  Timer? _timer;
 
   void incrementIndexAndStart(int index) async {
     if (index < recipeNavigation.steps!.length) {
@@ -22,12 +20,12 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     }
   }
 
-  Future<void> startTimer(int seconds, {bool verification = false}) async {
+  Future<void> startTimer(int seconds) async {
     remainingSeconds = seconds;
-    Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (remainingSeconds == 0) {
-        emit(state.copyWith(time: "00:00", timerStatus: false));
-        timer.cancel();
+        emit(state.copyWith(time: "00:00"));
+        cancelTimer();
       } else {
         int minutes = remainingSeconds ~/ 60;
         int seconds = remainingSeconds % 60;
@@ -36,5 +34,10 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
         remainingSeconds--;
       }
     });
+  }
+
+  void cancelTimer() {
+    _timer?.cancel();
+    emit(state.copyWith(timerStatus: false));
   }
 }
