@@ -12,25 +12,31 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
 
-  void incrementIndexAndStart(int index) async {
+  String calculateTimer(int duration) {
+    int minutes = duration ~/ 60;
+    int seconds = duration % 60;
+    return "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
+  }
+
+  void incrementIndexAndStart(int index) {
     if (index < recipeNavigation.steps!.length) {
-      emit(
-          state.copyWith(currentStep: recipeNavigation.steps?[index].step, currentIndex: index + 1, timerStatus: true));
-      await startTimer(recipeNavigation.steps?[index].duration ?? 0);
+      emit(state.copyWith(
+          currentStep: recipeNavigation.steps?[index].step,
+          currentIndex: index + 1,
+          timerStatus: true,
+          time: calculateTimer(recipeNavigation.steps?[index].duration ?? 0)));
+      startTimer(recipeNavigation.steps?[index].duration ?? 0);
     }
   }
 
-  Future<void> startTimer(int seconds) async {
+  void startTimer(int seconds) {
     remainingSeconds = seconds;
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingSeconds == 0) {
         emit(state.copyWith(time: "00:00"));
         cancelTimer();
       } else {
-        int minutes = remainingSeconds ~/ 60;
-        int seconds = remainingSeconds % 60;
-        emit(state.copyWith(
-            time: "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}", timerStatus: true));
+        emit(state.copyWith(time: calculateTimer(remainingSeconds), timerStatus: true));
         remainingSeconds--;
       }
     });
