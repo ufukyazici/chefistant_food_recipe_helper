@@ -35,15 +35,14 @@ class RecipeDetailsView extends StatelessWidget {
               //   },
               // ),
               ProjectDefaultButton(
-                buttonText: "Start recipe",
-                isBackgroundWhite: true,
-                onPressed: () async {
-                  await getRecipeNavigation(documentId);
-                  if (!context.mounted) return;
-                  context.route
-                      .navigateToPage(RecipeNavigationView(recipeNavigation: recipeNavigation, documentId: documentId));
-                },
-              )
+                  buttonText: "Start recipe",
+                  isBackgroundWhite: true,
+                  onPressed: () async {
+                    await getRecipeNavigation(documentId);
+                    if (!context.mounted) return;
+                    context.route.navigateToPage(
+                        RecipeNavigationView(recipeNavigation: recipeNavigation, documentId: documentId));
+                  })
             ],
           ),
         ),

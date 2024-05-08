@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
                       recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 150 / 188),
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.6),
                     itemCount: recipe.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
