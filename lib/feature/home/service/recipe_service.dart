@@ -1,9 +1,11 @@
+import 'package:chefistant_food_recipe_helper/feature/recipe_details/model/recipe_details_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class IRecipeService {
   Stream<QuerySnapshot> getRecipes();
   Future<RecipeNavigationModel> getRecipeNavigation(String documentId);
+  Future<RecipeDetailsModel> getRecipeDetails(String documentId);
 }
 
 class RecipeService implements IRecipeService {
@@ -28,6 +30,16 @@ class RecipeService implements IRecipeService {
         .doc(documentId)
         .get()
         .then((snapshot) => RecipeNavigationModel.fromJson(snapshot.data()!));
+    return result;
+  }
+
+  @override
+  Future<RecipeDetailsModel> getRecipeDetails(String documentId) async {
+    RecipeDetailsModel result = await _instance
+        .collection("recipe-details")
+        .doc(documentId)
+        .get()
+        .then((snapshot) => RecipeDetailsModel.fromJson(snapshot.data()!));
     return result;
   }
 }

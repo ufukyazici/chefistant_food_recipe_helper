@@ -7,17 +7,20 @@ import 'package:equatable/equatable.dart';
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
+  RecipeNavigationCubit({required this.recipeNavigation})
+      : super(const RecipeNavigationState());
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
 
+  //Returns the timer info as string
   String calculateTimer(int duration) {
     int minutes = duration ~/ 60;
     int seconds = duration % 60;
     return "${minutes.toString().padLeft(2, "0")}:${seconds.toString().padLeft(2, "0")}";
   }
 
+  //
   void incrementIndexAndStart(int index) {
     if (index < recipeNavigation.steps!.length) {
       emit(state.copyWith(
@@ -36,7 +39,8 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
         emit(state.copyWith(time: "00:00"));
         cancelTimer();
       } else {
-        emit(state.copyWith(time: calculateTimer(remainingSeconds), timerStatus: true));
+        emit(state.copyWith(
+            time: calculateTimer(remainingSeconds), timerStatus: true));
         remainingSeconds--;
       }
     });
