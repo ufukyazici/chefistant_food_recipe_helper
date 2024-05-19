@@ -30,11 +30,14 @@ class _HomeViewState extends State<HomeView> {
                 }
                 if (snapshot.hasData) {
                   List recipes = snapshot.data!.docs;
-                  List<RecipeHomeModel> recipe =
-                      recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
+                  List<RecipeHomeModel> recipe = recipes
+                      .map((document) =>
+                          RecipeHomeModel.fromJson(document.data()))
+                      .toList();
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.6),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, childAspectRatio: 0.55),
                     itemCount: recipe.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -54,18 +57,28 @@ class _HomeViewState extends State<HomeView> {
                             child: Column(
                               children: [
                                 ClipRRect(
-                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                    child: Image.network(recipe[index].imageUrl ?? "",
-                                        fit: BoxFit.fill, height: 120, width: 120)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    child: Image.network(
+                                        recipe[index].imageUrl ?? "",
+                                        fit: BoxFit.fill,
+                                        height: 120,
+                                        width: 120)),
                                 Padding(
                                   padding: const ProjectPadding.smallAll(),
                                   child: Text(
                                     recipe[index].name ?? "",
-                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: Colors.white),
                                   ),
                                 ),
                                 Text(recipe[index].duration.toString(),
-                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white)),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(color: Colors.white)),
                               ],
                             ),
                           ),

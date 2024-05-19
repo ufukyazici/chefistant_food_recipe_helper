@@ -3,30 +3,36 @@ import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view_mod
 import 'package:chefistant_food_recipe_helper/product/utility/constants/enums/lotties.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
+import 'package:chefistant_food_recipe_helper/product/widget/padding/project_padding.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class RecipeNavigationView extends StatelessWidget {
-  const RecipeNavigationView({super.key, required this.recipeNavigation, required this.documentId});
+  const RecipeNavigationView(
+      {super.key, required this.recipeNavigation, required this.documentId});
   final RecipeNavigationModel recipeNavigation;
   final String documentId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(
-      create: (context) => RecipeNavigationCubit(recipeNavigation: recipeNavigation),
+      create: (context) =>
+          RecipeNavigationCubit(recipeNavigation: recipeNavigation),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RecipeLottieWidget(),
-              RecipeStepText(),
-              RecipeTimeText(),
-              RecipeNavigationButton(),
-            ],
+        body: const Padding(
+          padding: ProjectPadding.largeAll(),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RecipeLottieWidget(),
+                RecipeStepText(),
+                RecipeTimeText(),
+                RecipeNavigationButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,7 +78,13 @@ class RecipeTimeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RecipeNavigationCubit, RecipeNavigationState>(
       builder: (context, state) {
-        return Text(state.time);
+        return Padding(
+          padding: const ProjectPadding.mediumAll(),
+          child: Text(
+            state.time,
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+        );
       },
     );
   }
@@ -88,8 +100,9 @@ class RecipeNavigationButton extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           height: state.timerStatus ? 35 : 35,
           child: ProjectDefaultButton(
-            buttonText:
-                state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
+            buttonText: state.currentIndex == 0
+                ? "recipeNavigation.startRecipe".tr()
+                : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
             onPressed: () {
               // state.timerStatus
@@ -98,7 +111,9 @@ class RecipeNavigationButton extends StatelessWidget {
               if (state.currentIndex != 0) {
                 context.read<RecipeNavigationCubit>().cancelTimer();
               }
-              context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
+              context
+                  .read<RecipeNavigationCubit>()
+                  .incrementIndexAndStart(state.currentIndex);
             },
           ),
         );
