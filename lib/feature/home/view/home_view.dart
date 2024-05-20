@@ -1,6 +1,6 @@
 import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_home_model.dart';
-import 'package:chefistant_food_recipe_helper/feature/home/service/recipe_service.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_details/view/recipe_details_view.dart';
+import 'package:chefistant_food_recipe_helper/product/service/product_service.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/padding/project_padding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +14,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final IRecipeService _service = RecipeService();
+  final IProductService _service = ProductService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +30,11 @@ class _HomeViewState extends State<HomeView> {
                 }
                 if (snapshot.hasData) {
                   List recipes = snapshot.data!.docs;
-                  List<RecipeHomeModel> recipe = recipes
-                      .map((document) =>
-                          RecipeHomeModel.fromJson(document.data()))
-                      .toList();
+                  List<RecipeHomeModel> recipe =
+                      recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
                   return GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, childAspectRatio: 0.55),
+                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.55),
                     itemCount: recipe.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -57,28 +54,18 @@ class _HomeViewState extends State<HomeView> {
                             child: Column(
                               children: [
                                 ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    child: Image.network(
-                                        recipe[index].imageUrl ?? "",
-                                        fit: BoxFit.fill,
-                                        height: 120,
-                                        width: 120)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                    child: Image.network(recipe[index].imageUrl ?? "",
+                                        fit: BoxFit.fill, height: 120, width: 120)),
                                 Padding(
                                   padding: const ProjectPadding.smallAll(),
                                   child: Text(
                                     recipe[index].name ?? "",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: Colors.white),
+                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white),
                                   ),
                                 ),
                                 Text(recipe[index].duration.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: Colors.white)),
+                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white)),
                               ],
                             ),
                           ),

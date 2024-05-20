@@ -1,6 +1,6 @@
-import 'package:chefistant_food_recipe_helper/feature/home/service/recipe_service.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/view/recipe_navigation_view.dart';
+import 'package:chefistant_food_recipe_helper/product/service/product_service.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/button/project_default_button.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:kartal/kartal.dart';
 class RecipeDetailsView extends StatelessWidget {
   RecipeDetailsView({super.key, required this.documentId});
   final String documentId;
-  final IRecipeService _service = RecipeService();
+  final IProductService _service = ProductService();
   late final RecipeNavigationModel recipeNavigation;
   getRecipeNavigation(String documentId) async {
     recipeNavigation = await _service.getRecipeNavigation(documentId);

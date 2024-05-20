@@ -1,13 +1,15 @@
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class IRecipeService {
+import 'product_service_path.dart';
+
+abstract class IProductService {
   Stream<QuerySnapshot> getRecipes();
   Future<RecipeNavigationModel> getRecipeNavigation(String documentId);
   // Future<RecipeDetailsModel> getRecipeDetails(String documentId);
 }
 
-class RecipeService implements IRecipeService {
+class ProductService implements IProductService {
   final _instance = FirebaseFirestore.instance;
   // Future<List<RecipeModel>?> getRecipes() async {
   //   List<RecipeModel> result = await FirebaseFirestore.instance
@@ -19,13 +21,13 @@ class RecipeService implements IRecipeService {
 
   @override
   Stream<QuerySnapshot> getRecipes() {
-    return _instance.collection('recipes').snapshots();
+    return _instance.collection(ProductServicePath.recipes.value).snapshots();
   }
 
   @override
   Future<RecipeNavigationModel> getRecipeNavigation(String documentId) async {
     RecipeNavigationModel result = await _instance
-        .collection('recipe-navigation')
+        .collection(ProductServicePath.recipeNavigation.value)
         .doc(documentId)
         .get()
         .then((snapshot) => RecipeNavigationModel.fromJson(snapshot.data()!));
