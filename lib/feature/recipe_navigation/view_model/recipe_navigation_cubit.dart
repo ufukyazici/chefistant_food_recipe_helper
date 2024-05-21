@@ -9,8 +9,7 @@ import 'package:equatable/equatable.dart';
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.recipeNavigation})
-      : super(const RecipeNavigationState());
+  RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
@@ -59,8 +58,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
         emit(state.copyWith(time: "00:00", timerStatus: false));
         cancelTimer();
       } else {
-        emit(state.copyWith(
-            time: calculateTimer(remainingSeconds), timerStatus: true));
+        emit(state.copyWith(time: calculateTimer(remainingSeconds), timerStatus: true));
         remainingSeconds--;
       }
     });
@@ -73,8 +71,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   Future<void> triggerAlarm(int seconds) async {
     await Alarm.set(
-        alarmSettings: alarmSettings.copyWith(
-            dateTime: DateTime.now().add(Duration(seconds: seconds))));
+        alarmSettings: alarmSettings.copyWith(dateTime: DateTime.now().add(Duration(seconds: (seconds + 3)))));
   }
 
   void cancelAlarm(int id) {

@@ -1,19 +1,12 @@
-import 'package:alarm/alarm.dart';
 import 'package:chefistant_food_recipe_helper/feature/home/view/home_view.dart';
-import 'package:chefistant_food_recipe_helper/firebase_options.dart';
+import 'package:chefistant_food_recipe_helper/product/init/application_initialize.dart';
 import 'package:chefistant_food_recipe_helper/product/init/localization_init.dart';
 import 'package:chefistant_food_recipe_helper/product/init/theme/custom_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await Alarm.init();
+  await ApplicationInitialize().make();
   runApp(LocalizationInit(child: const MyApp()));
 }
 
