@@ -70,7 +70,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
             .alarmSettings);
   }
 
-  void cancelAlarm(int id) {
-    Alarm.stop(id);
+  Future<void> cancelAlarm(int id) async {
+    await Alarm.stop(id);
   }
 }
