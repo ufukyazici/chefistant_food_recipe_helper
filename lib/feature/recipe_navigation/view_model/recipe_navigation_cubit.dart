@@ -9,17 +9,17 @@ import 'package:equatable/equatable.dart';
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
+  RecipeNavigationCubit({required this.recipeNavigation})
+      : super(const RecipeNavigationState());
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
   final alarmSettings = AlarmSettings(
-      id: 42,
-      assetAudioPath: 'assets/alarm.mp3',
+      id: 1,
+      assetAudioPath: 'assets/audio/alarm.wav',
       loopAudio: true,
       vibrate: true,
       volume: 0.8,
-      fadeDuration: 3.0,
       notificationTitle: 'This is the title',
       notificationBody: 'This is the body',
       dateTime: DateTime.now());
@@ -27,6 +27,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   @override
   Future<void> close() {
     _timer?.cancel();
+    Alarm.stopAll();
     return super.close();
   }
 
@@ -39,6 +40,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   //
   void incrementIndexAndStart(int index) {
+    cancelAlarm(1);
     if (index < recipeNavigation.steps!.length) {
       emit(state.copyWith(
           currentStep: recipeNavigation.steps?[index].step,
@@ -51,13 +53,14 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   void startTimer(int seconds) {
     remainingSeconds = seconds;
+    triggerAlarm(seconds);
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingSeconds == 0) {
-        triggerAlarm();
         emit(state.copyWith(time: "00:00", timerStatus: false));
         cancelTimer();
       } else {
-        emit(state.copyWith(time: calculateTimer(remainingSeconds), timerStatus: true));
+        emit(state.copyWith(
+            time: calculateTimer(remainingSeconds), timerStatus: true));
         remainingSeconds--;
       }
     });
@@ -68,7 +71,13 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     emit(state.copyWith(timerStatus: false));
   }
 
-  Future<void> triggerAlarm() async {
-    await Alarm.set(alarmSettings: alarmSettings);
+  Future<void> triggerAlarm(int seconds) async {
+    await Alarm.set(
+        alarmSettings: alarmSettings.copyWith(
+            dateTime: DateTime.now().add(Duration(seconds: seconds))));
+  }
+
+  void cancelAlarm(int id) {
+    Alarm.stop(id);
   }
 }
