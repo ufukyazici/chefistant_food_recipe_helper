@@ -10,7 +10,7 @@ class RecipeDetailsView extends StatelessWidget {
   RecipeDetailsView({super.key, required this.documentId});
   final String documentId;
   final IProductService _service = ProductService();
-  late final RecipeNavigationModel recipeNavigation;
+  late final RecipeNavigationModel? recipeNavigation;
   getRecipeNavigation(String documentId) async {
     recipeNavigation = await _service.getRecipeNavigation(documentId);
   }
@@ -40,8 +40,12 @@ class RecipeDetailsView extends StatelessWidget {
                   onPressed: () async {
                     await getRecipeNavigation(documentId);
                     if (!context.mounted) return;
-                    context.route.navigateToPage(
-                        RecipeNavigationView(recipeNavigation: recipeNavigation, documentId: documentId));
+                    if (recipeNavigation != null) {
+                      context.route.navigateToPage(
+                          RecipeNavigationView(recipeNavigation: recipeNavigation!, documentId: documentId));
+                    } else {
+                      const SnackBar(content: Text("Recipe not found"));
+                    }
                   })
             ],
           ),

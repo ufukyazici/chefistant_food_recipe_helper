@@ -5,7 +5,7 @@ import 'product_service_path.dart';
 
 abstract class IProductService {
   Stream<QuerySnapshot> getRecipes();
-  Future<RecipeNavigationModel> getRecipeNavigation(String documentId);
+  Future<RecipeNavigationModel?> getRecipeNavigation(String documentId);
   // Future<RecipeDetailsModel> getRecipeDetails(String documentId);
 }
 
@@ -25,13 +25,18 @@ class ProductService implements IProductService {
   }
 
   @override
-  Future<RecipeNavigationModel> getRecipeNavigation(String documentId) async {
-    RecipeNavigationModel result = await _instance
-        .collection(ProductServicePath.recipeNavigation.value)
-        .doc(documentId)
-        .get()
-        .then((snapshot) => RecipeNavigationModel.fromJson(snapshot.data()!));
-    return result;
+  Future<RecipeNavigationModel?> getRecipeNavigation(String documentId) async {
+    RecipeNavigationModel? result;
+    try {
+      result = await _instance
+          .collection(ProductServicePath.recipeNavigation.value)
+          .doc(documentId)
+          .get()
+          .then((snapshot) => RecipeNavigationModel.fromJson(snapshot.data()!));
+      return result;
+    } catch (e) {
+      return result;
+    }
   }
 
   // @override

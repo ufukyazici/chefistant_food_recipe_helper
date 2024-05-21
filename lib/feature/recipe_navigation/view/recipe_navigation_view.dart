@@ -10,15 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class RecipeNavigationView extends StatelessWidget {
-  const RecipeNavigationView(
-      {super.key, required this.recipeNavigation, required this.documentId});
+  const RecipeNavigationView({super.key, required this.recipeNavigation, required this.documentId});
   final RecipeNavigationModel recipeNavigation;
   final String documentId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RecipeNavigationCubit>(
-      create: (context) =>
-          RecipeNavigationCubit(recipeNavigation: recipeNavigation),
+      create: (context) => RecipeNavigationCubit(recipeNavigation: recipeNavigation),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
         body: const Padding(
@@ -100,20 +98,14 @@ class RecipeNavigationButton extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           height: state.timerStatus ? 35 : 35,
           child: ProjectDefaultButton(
-            buttonText: state.currentIndex == 0
-                ? "recipeNavigation.startRecipe".tr()
-                : "recipeNavigation.nextStep".tr(),
+            buttonText:
+                state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
             isBackgroundWhite: true,
             onPressed: () {
-              // state.timerStatus
-              //     ? null
-              //     : context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
               if (state.currentIndex != 0) {
                 context.read<RecipeNavigationCubit>().cancelTimer();
               }
-              context
-                  .read<RecipeNavigationCubit>()
-                  .incrementIndexAndStart(state.currentIndex);
+              context.read<RecipeNavigationCubit>().incrementIndexAndStart(state.currentIndex);
             },
           ),
         );

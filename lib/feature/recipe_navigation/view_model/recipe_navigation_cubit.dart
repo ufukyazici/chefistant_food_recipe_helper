@@ -7,11 +7,16 @@ import 'package:equatable/equatable.dart';
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.recipeNavigation})
-      : super(const RecipeNavigationState());
+  RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    return super.close();
+  }
 
   //Returns the timer info as string
   String calculateTimer(int duration) {
@@ -36,11 +41,10 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     remainingSeconds = seconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingSeconds == 0) {
-        emit(state.copyWith(time: "00:00"));
+        emit(state.copyWith(time: "00:00", timerStatus: false));
         cancelTimer();
       } else {
-        emit(state.copyWith(
-            time: calculateTimer(remainingSeconds), timerStatus: true));
+        emit(state.copyWith(time: calculateTimer(remainingSeconds), timerStatus: true));
         remainingSeconds--;
       }
     });
