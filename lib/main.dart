@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:chefistant_food_recipe_helper/feature/home/view/home_view.dart';
 import 'package:chefistant_food_recipe_helper/firebase_options.dart';
 import 'package:chefistant_food_recipe_helper/product/init/localization_init.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Alarm.init();
   runApp(LocalizationInit(child: const MyApp()));
 }
 

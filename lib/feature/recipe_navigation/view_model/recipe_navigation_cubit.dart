@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
 import 'package:equatable/equatable.dart';
@@ -11,6 +13,16 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
+  final alarmSettings = AlarmSettings(
+      id: 42,
+      assetAudioPath: 'assets/alarm.mp3',
+      loopAudio: true,
+      vibrate: true,
+      volume: 0.8,
+      fadeDuration: 3.0,
+      notificationTitle: 'This is the title',
+      notificationBody: 'This is the body',
+      dateTime: DateTime.now());
 
   @override
   Future<void> close() {
@@ -41,6 +53,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
     remainingSeconds = seconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingSeconds == 0) {
+        triggerAlarm();
         emit(state.copyWith(time: "00:00", timerStatus: false));
         cancelTimer();
       } else {
@@ -53,5 +66,9 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   void cancelTimer() {
     _timer?.cancel();
     emit(state.copyWith(timerStatus: false));
+  }
+
+  Future<void> triggerAlarm() async {
+    await Alarm.set(alarmSettings: alarmSettings);
   }
 }
