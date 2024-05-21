@@ -30,7 +30,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   //
   void incrementIndexAndStart(int index) {
-    cancelAlarm(1);
+    Alarm.stop(1);
     if (index < recipeNavigation.steps!.length) {
       emit(state.copyWith(
           currentStep: recipeNavigation.steps?[index].step,
@@ -43,9 +43,9 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   void startTimer(int seconds) {
     remainingSeconds = seconds;
-    triggerAlarm(seconds);
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingSeconds == 0) {
+        triggerAlarm(seconds);
         emit(state.copyWith(time: "00:00", timerStatus: false));
         cancelTimer();
       } else {
@@ -66,15 +66,11 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
                 alarmId: 1,
                 notificationTitle: "notificationTitle",
                 notificationBody: "notificationBody",
-                dateTime: calculateTimeForAlarm(seconds))
+                dateTime: DateTime.now())
             .alarmSettings);
   }
 
   void cancelAlarm(int id) {
     Alarm.stop(id);
-  }
-
-  DateTime calculateTimeForAlarm(int seconds) {
-    return DateTime.now().add(Duration(seconds: seconds + 3));
   }
 }

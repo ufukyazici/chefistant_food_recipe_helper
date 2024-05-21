@@ -14,6 +14,7 @@ class ProjectAlarmSettings {
     alarmSettings = AlarmSettings(
       id: alarmId,
       dateTime: dateTime,
+      fadeDuration: 3.0,
       assetAudioPath: 'assets/audio/alarm.wav',
       loopAudio: true,
       vibrate: true,
