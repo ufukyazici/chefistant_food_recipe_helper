@@ -10,11 +10,7 @@ final class ApplicationInitialize {
   /// project basic required initialize
   Future<void> make() async {
     WidgetsFlutterBinding.ensureInitialized();
-
-    await runZonedGuarded<Future<void>>(
-      _initialize,
-      (error, stack) {},
-    );
+    await _initialize();
   }
 
   /// This method is used to initialize the application process

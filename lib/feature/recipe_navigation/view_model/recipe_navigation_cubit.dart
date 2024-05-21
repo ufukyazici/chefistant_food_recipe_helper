@@ -29,7 +29,7 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   }
 
   //
-  void incrementIndexAndStart(int index) {
+  Future<void> incrementIndexAndStart(int index) async {
     Alarm.stop(1);
     if (index < recipeNavigation.steps!.length) {
       emit(state.copyWith(
