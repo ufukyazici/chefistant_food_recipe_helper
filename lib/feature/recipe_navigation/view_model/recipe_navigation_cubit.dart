@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:alarm/alarm.dart';
-import 'package:alarm/model/alarm_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
+import 'package:chefistant_food_recipe_helper/product/utility/project_alarm_settings.dart';
 import 'package:equatable/equatable.dart';
 
 part 'recipe_navigation_state.dart';
@@ -13,15 +13,6 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   late int remainingSeconds;
   final RecipeNavigationModel recipeNavigation;
   Timer? _timer;
-  final alarmSettings = AlarmSettings(
-      id: 1,
-      assetAudioPath: 'assets/audio/alarm.wav',
-      loopAudio: true,
-      vibrate: true,
-      volume: 0.8,
-      notificationTitle: 'This is the title',
-      notificationBody: 'This is the body',
-      dateTime: DateTime.now());
 
   @override
   Future<void> close() {
@@ -71,10 +62,19 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
 
   Future<void> triggerAlarm(int seconds) async {
     await Alarm.set(
-        alarmSettings: alarmSettings.copyWith(dateTime: DateTime.now().add(Duration(seconds: (seconds + 3)))));
+        alarmSettings: ProjectAlarmSettings(
+                alarmId: 1,
+                notificationTitle: "notificationTitle",
+                notificationBody: "notificationBody",
+                dateTime: calculateTimeForAlarm(seconds))
+            .alarmSettings);
   }
 
   void cancelAlarm(int id) {
     Alarm.stop(id);
+  }
+
+  DateTime calculateTimeForAlarm(int seconds) {
+    return DateTime.now().add(Duration(seconds: seconds + 3));
   }
 }
