@@ -61,11 +61,10 @@ class _HomeViewState extends State<HomeView> {
                                   padding: const ProjectPadding.smallAll(),
                                   child: Text(
                                     recipe[index].name ?? "",
-                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white),
+                                    style: Theme.of(context).textTheme.labelLarge,
                                   ),
                                 ),
-                                Text(recipe[index].duration.toString(),
-                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white)),
+                                Text(recipe[index].duration.toString(), style: Theme.of(context).textTheme.labelLarge),
                               ],
                             ),
                           ),

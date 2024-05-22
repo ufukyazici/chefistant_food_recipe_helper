@@ -43,8 +43,6 @@ class RecipeDetailsView extends StatelessWidget {
                     if (recipeNavigation != null) {
                       context.route.navigateToPage(
                           RecipeNavigationView(recipeNavigation: recipeNavigation!, documentId: documentId));
-                    } else {
-                      const SnackBar(content: Text("Recipe not found"));
                     }
                   })
             ],

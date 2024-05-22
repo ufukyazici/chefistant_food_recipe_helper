@@ -8,6 +8,11 @@ class CustomTheme {
   late ThemeData theme;
   CustomTheme() {
     theme = ThemeData(
+        textTheme: TextTheme(
+          labelSmall: TextStyle(color: colorScheme.textColor),
+          labelLarge: TextStyle(color: colorScheme.textColor),
+          labelMedium: TextStyle(color: colorScheme.textColor),
+        ),
         appBarTheme: AppBarTheme(
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
             backgroundColor: colorScheme.primaryColor,
@@ -28,16 +33,16 @@ class CustomTheme {
             foregroundColor: colorScheme.secondaryColor,
             shape: const CircleBorder()),
         cardTheme: CardTheme(
-            color: colorScheme.primaryColor,
+            color: colorScheme.secondaryColor,
             margin: const ProjectPadding.smallAll(),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             elevation: 5,
             shadowColor: Colors.black.withOpacity(0.5)),
         listTileTheme: ListTileThemeData(
-            textColor: colorScheme.secondaryColor,
-            iconColor: colorScheme.secondaryColor,
-            titleTextStyle: TextStyle(color: colorScheme.secondaryColor, fontWeight: FontWeight.bold),
-            subtitleTextStyle: TextStyle(color: colorScheme.secondaryColor.withOpacity(0.5)),
+            textColor: colorScheme.textColor,
+            iconColor: colorScheme.textColor,
+            titleTextStyle: TextStyle(color: colorScheme.textColor, fontWeight: FontWeight.bold),
+            subtitleTextStyle: TextStyle(color: colorScheme.textColor.withOpacity(0.5)),
             tileColor: colorScheme.primaryColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             contentPadding: const ProjectPadding.smallAll(),
@@ -57,6 +62,7 @@ class CustomTheme {
 }
 
 class _ColorScheme {
-  final Color primaryColor = Colors.red;
-  final Color secondaryColor = Colors.white;
+  final Color primaryColor = const Color(0xffd52424);
+  final Color secondaryColor = const Color(0xfff0f0f0);
+  final Color textColor = const Color(0xff030303);
 }
