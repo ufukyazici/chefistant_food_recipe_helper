@@ -11,10 +11,11 @@ class ProjectDefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: isBackgroundWhite ? Colors.red : Colors.white,
-          foregroundColor: isBackgroundWhite ? Colors.white : Colors.red),
+          backgroundColor: isBackgroundWhite ? const Color(0xffd52424) : Colors.white,
+          foregroundColor: isBackgroundWhite ? Colors.white : const Color(0xffd52424)),
       onPressed: onPressed,
-      child: Center(child: Text(buttonText, style: TextStyle(color: isBackgroundWhite ? Colors.white : Colors.red))),
+      child: Center(
+          child: Text(buttonText, style: TextStyle(color: isBackgroundWhite ? Colors.white : const Color(0xffd52424)))),
     );
   }
 }

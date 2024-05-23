@@ -1,8 +1,10 @@
-import 'package:chefistant_food_recipe_helper/feature/home/cubit/home_cubit.dart';
+import 'package:chefistant_food_recipe_helper/feature/home/view_model/home_cubit.dart';
 import 'package:chefistant_food_recipe_helper/feature/home/widget/recipe_home_card_widget.dart';
+import 'package:chefistant_food_recipe_helper/feature/recipe_details/view/recipe_details_view.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kartal/kartal.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -41,10 +43,15 @@ class _HomeViewState extends State<HomeView> {
                     scrollDirection: Axis.horizontal,
                     itemCount: state.recipes.length,
                     itemBuilder: (context, index) {
-                      return RecipeHomeCardWidget(
-                          imageUrl: state.recipes[index].data.imageUrl ?? "",
-                          duration: state.recipes[index].data.duration ?? "",
-                          name: state.recipes[index].data.name ?? "");
+                      return InkWell(
+                        onTap: () {
+                          context.route.navigateToPage(RecipeDetailsView(documentId: state.recipes[index].id));
+                        },
+                        child: RecipeHomeCardWidget(
+                            imageUrl: state.recipes[index].data.imageUrl ?? "",
+                            duration: state.recipes[index].data.duration ?? "",
+                            name: state.recipes[index].data.name ?? ""),
+                      );
                     }),
               ),
             ]),

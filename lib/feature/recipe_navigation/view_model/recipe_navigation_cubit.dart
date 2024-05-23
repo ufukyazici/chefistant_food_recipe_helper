@@ -3,16 +3,22 @@ import 'dart:async';
 import 'package:alarm/alarm.dart';
 import 'package:bloc/bloc.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
+import 'package:chefistant_food_recipe_helper/product/service/product_service.dart';
+import 'package:chefistant_food_recipe_helper/product/utility/firebase/firebase_base_model.dart';
 import 'package:chefistant_food_recipe_helper/product/utility/project_alarm_settings.dart';
 import 'package:equatable/equatable.dart';
 
 part 'recipe_navigation_state.dart';
 
 class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
-  RecipeNavigationCubit({required this.recipeNavigation}) : super(const RecipeNavigationState());
+  RecipeNavigationCubit() : super(const RecipeNavigationState());
   late int remainingSeconds;
-  final RecipeNavigationModel recipeNavigation;
+  late BaseFirebaseModel<RecipeNavigationModel> recipeNavigation;
+  final IProductService _service = ProductService();
   Timer? _timer;
+  Future<void> fetchRecipeNavigation(String id) async {
+    recipeNavigation = await _service.getRecipeNavigation(id);
+  }
 
   @override
   Future<void> close() {
@@ -31,13 +37,13 @@ class RecipeNavigationCubit extends Cubit<RecipeNavigationState> {
   //
   Future<void> incrementIndexAndStart(int index) async {
     Alarm.stop(1);
-    if (index < recipeNavigation.steps!.length) {
+    if (index < recipeNavigation.data.steps!.length) {
       emit(state.copyWith(
-          currentStep: recipeNavigation.steps?[index].step,
+          currentStep: recipeNavigation.data.steps?[index].step,
           currentIndex: index + 1,
           timerStatus: true,
-          time: calculateTimer(recipeNavigation.steps?[index].duration ?? 0)));
-      startTimer(recipeNavigation.steps?[index].duration ?? 0);
+          time: calculateTimer(recipeNavigation.data.steps?[index].duration ?? 0)));
+      startTimer(recipeNavigation.data.steps?[index].duration ?? 0);
     }
   }
 

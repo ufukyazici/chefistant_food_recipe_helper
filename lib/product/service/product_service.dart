@@ -7,9 +7,9 @@ import 'product_service_path.dart';
 
 abstract class IProductService {
   // Stream<QuerySnapshot> getRecipes();
-  Future<RecipeNavigationModel?> getRecipeNavigation(String documentId);
   // Future<RecipeDetailsModel> getRecipeDetails(String documentId);
   Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipes();
+  Future<BaseFirebaseModel<RecipeNavigationModel>> getRecipeNavigation(String documentId);
 }
 
 class ProductService implements IProductService {
@@ -28,18 +28,17 @@ class ProductService implements IProductService {
   // }
 
   @override
-  Future<RecipeNavigationModel?> getRecipeNavigation(String documentId) async {
-    RecipeNavigationModel? result;
-    try {
-      result = await _instance
-          .collection(ProductServicePath.recipeNavigation.value)
-          .doc(documentId)
-          .get()
-          .then((snapshot) => RecipeNavigationModel.fromJson(snapshot.data()!));
-      return result;
-    } catch (e) {
-      return result;
-    }
+  Future<BaseFirebaseModel<RecipeNavigationModel>> getRecipeNavigation(String documentId) async {
+    final items = await _instance.collection(ProductServicePath.recipeNavigation.value).doc(documentId).withConverter(
+      fromFirestore: (snapshot, options) {
+        if (snapshot.data()?.isEmpty ?? true) return null;
+        return BaseFirebaseModel(id: snapshot.id, data: RecipeNavigationModel.fromJson(snapshot.data()!));
+      },
+      toFirestore: (value, options) {
+        throw Exception("-");
+      },
+    ).get();
+    return items.data() as BaseFirebaseModel<RecipeNavigationModel>;
   }
 
   @override
