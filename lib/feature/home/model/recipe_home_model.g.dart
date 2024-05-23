@@ -10,7 +10,7 @@ RecipeHomeModel _$RecipeHomeModelFromJson(Map<String, dynamic> json) => RecipeHo
       name: json['name'] as String?,
       description: json['description'] as String?,
       category: json['category'] as String?,
-      duration: json['duration'] as int?,
+      duration: json['duration'] as String?,
       imageUrl: json['image-url'] as String?,
     );
 

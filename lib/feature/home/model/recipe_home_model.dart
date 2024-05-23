@@ -7,7 +7,7 @@ class RecipeHomeModel {
   String? name;
   String? description;
   String? category;
-  int? duration;
+  String? duration;
   String? imageUrl;
 
   RecipeHomeModel({this.name, this.description, this.category, this.duration, this.imageUrl});

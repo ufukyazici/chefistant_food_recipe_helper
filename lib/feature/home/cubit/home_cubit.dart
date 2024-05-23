@@ -10,7 +10,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(const HomeState([]));
   final IProductService _service = ProductService();
   Future<void> fetchRecipes() async {
-    final recipes = await _service.getRecipesv2();
+    final recipes = await _service.getRecipes();
     emit(state.copyWith(recipes: recipes));
   }
 

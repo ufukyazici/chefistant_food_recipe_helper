@@ -6,10 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'product_service_path.dart';
 
 abstract class IProductService {
-  Stream<QuerySnapshot> getRecipes();
+  // Stream<QuerySnapshot> getRecipes();
   Future<RecipeNavigationModel?> getRecipeNavigation(String documentId);
   // Future<RecipeDetailsModel> getRecipeDetails(String documentId);
-  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipesv2();
+  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipes();
 }
 
 class ProductService implements IProductService {
@@ -22,10 +22,10 @@ class ProductService implements IProductService {
   //   return result;
   // }
 
-  @override
-  Stream<QuerySnapshot> getRecipes() {
-    return _instance.collection(ProductServicePath.recipes.value).snapshots();
-  }
+  // @override
+  // Stream<QuerySnapshot> getRecipes() {
+  //   return _instance.collection(ProductServicePath.recipes.value).snapshots();
+  // }
 
   @override
   Future<RecipeNavigationModel?> getRecipeNavigation(String documentId) async {
@@ -43,7 +43,7 @@ class ProductService implements IProductService {
   }
 
   @override
-  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipesv2() async {
+  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipes() async {
     final items = await _instance.collection(ProductServicePath.recipes.value).withConverter(
       fromFirestore: (snapshot, options) {
         if (snapshot.data()?.isEmpty ?? true) return null;
