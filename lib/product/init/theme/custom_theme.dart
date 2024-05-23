@@ -43,7 +43,7 @@ class CustomTheme {
             iconColor: colorScheme.textColor,
             titleTextStyle: TextStyle(color: colorScheme.textColor, fontWeight: FontWeight.bold),
             subtitleTextStyle: TextStyle(color: colorScheme.textColor.withOpacity(0.5)),
-            tileColor: colorScheme.primaryColor,
+            tileColor: colorScheme.secondaryColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             contentPadding: const ProjectPadding.smallAll(),
             horizontalTitleGap: 10,

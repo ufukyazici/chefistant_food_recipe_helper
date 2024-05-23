@@ -1,4 +1,6 @@
+import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_home_model.dart';
 import 'package:chefistant_food_recipe_helper/feature/recipe_navigation/model/recipe_navigation_model.dart';
+import 'package:chefistant_food_recipe_helper/product/utility/firebase/firebase_base_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'product_service_path.dart';
@@ -7,6 +9,7 @@ abstract class IProductService {
   Stream<QuerySnapshot> getRecipes();
   Future<RecipeNavigationModel?> getRecipeNavigation(String documentId);
   // Future<RecipeDetailsModel> getRecipeDetails(String documentId);
+  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipesv2();
 }
 
 class ProductService implements IProductService {
@@ -37,6 +40,25 @@ class ProductService implements IProductService {
     } catch (e) {
       return result;
     }
+  }
+
+  @override
+  Future<List<BaseFirebaseModel<RecipeHomeModel>>> getRecipesv2() async {
+    final items = await _instance.collection(ProductServicePath.recipes.value).withConverter(
+      fromFirestore: (snapshot, options) {
+        if (snapshot.data()?.isEmpty ?? true) return null;
+        return BaseFirebaseModel(id: snapshot.id, data: RecipeHomeModel.fromJson(snapshot.data()!));
+      },
+      toFirestore: (value, options) {
+        throw Exception("-");
+      },
+    ).get();
+    final recipes = items.docs
+        .map((e) => e.data())
+        .where((element) => element != null)
+        .cast<BaseFirebaseModel<RecipeHomeModel>>()
+        .toList();
+    return recipes;
   }
 
   // @override

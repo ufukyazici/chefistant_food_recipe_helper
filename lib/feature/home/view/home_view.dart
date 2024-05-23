@@ -1,10 +1,8 @@
-import 'package:chefistant_food_recipe_helper/feature/home/model/recipe_home_model.dart';
-import 'package:chefistant_food_recipe_helper/feature/recipe_details/view/recipe_details_view.dart';
-import 'package:chefistant_food_recipe_helper/product/service/product_service.dart';
+import 'package:chefistant_food_recipe_helper/feature/home/cubit/home_cubit.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/appbar/project_appbar.dart';
 import 'package:chefistant_food_recipe_helper/product/widget/padding/project_padding.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -14,71 +12,72 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final IProductService _service = ProductService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: projectAppbar(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(children: [
-            StreamBuilder(
-              stream: _service.getRecipes(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasData) {
-                  List recipes = snapshot.data!.docs;
-                  List<RecipeHomeModel> recipe =
-                      recipes.map((document) => RecipeHomeModel.fromJson(document.data())).toList();
-                  return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.55),
-                    itemCount: recipe.length,
+    return BlocProvider(
+      create: (context) => HomeCubit()..fetchRecipes(),
+      child: BlocConsumer<HomeCubit, HomeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            appBar: projectAppbar(),
+            body: Column(mainAxisSize: MainAxisSize.min, children: [
+              TextField(
+                onChanged: (value) {
+                  // context.read<HomeCubit>().searchByItems(value);
+                },
+                decoration: const InputDecoration(
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.22,
+                child: ListView.builder(
                     shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.recipes.length,
                     itemBuilder: (context, index) {
-                      DocumentSnapshot document = recipes[index];
-                      final documentId = document.id;
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return RecipeDetailsView(documentId: documentId);
-                            },
-                          ));
-                        },
-                        child: Card(
-                          child: Padding(
-                            padding: const ProjectPadding.smallAll(),
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                    child: Image.network(recipe[index].imageUrl ?? "",
-                                        fit: BoxFit.fill, height: 120, width: 120)),
-                                Padding(
-                                  padding: const ProjectPadding.smallAll(),
-                                  child: Text(
-                                    recipe[index].name ?? "",
-                                    style: Theme.of(context).textTheme.labelLarge,
-                                  ),
-                                ),
-                                Text(recipe[index].duration.toString(), style: Theme.of(context).textTheme.labelLarge),
-                              ],
+                      return SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.22,
+                          width: MediaQuery.of(context).size.width * 0.65,
+                          child: Card(
+                            child: Padding(
+                              padding: const ProjectPadding.smallAll(),
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                      borderRadius: const BorderRadius.all(Radius.circular(25)),
+                                      child: Image.network(
+                                        state.recipes[index].data.imageUrl ?? "",
+                                        fit: BoxFit.fill,
+                                        height: MediaQuery.of(context).size.height * 0.15,
+                                      )),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(state.recipes[index].data.name ?? "", textAlign: TextAlign.start)),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(state.recipes[index].data.duration.toString())),
+                                ],
+                                // ListTile(
+                                //   leading: ClipRRect(
+                                //       borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                //       child: Image.network(state.recipes[index].data.imageUrl ?? "", fit: BoxFit.fill)),
+                                //   title: Text(state.recipes[index].data.name ?? ""),
+                                //   subtitle: Text(state.recipes[index].data.duration.toString()),
+                                // ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return const Text("No data available");
-                }
-              },
-            )
-          ]),
-        ),
+                          ));
+                    }),
+              ),
+            ]),
+          );
+        },
       ),
     );
   }
