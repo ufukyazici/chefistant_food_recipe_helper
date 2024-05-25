@@ -8,7 +8,6 @@ part of 'recipe_home_model.dart';
 
 RecipeHomeModel _$RecipeHomeModelFromJson(Map<String, dynamic> json) => RecipeHomeModel(
       name: json['name'] as String?,
-      description: json['description'] as String?,
       category: json['category'] as String?,
       duration: json['duration'] as String?,
       imageUrl: json['image-url'] as String?,
@@ -16,7 +15,6 @@ RecipeHomeModel _$RecipeHomeModelFromJson(Map<String, dynamic> json) => RecipeHo
 
 Map<String, dynamic> _$RecipeHomeModelToJson(RecipeHomeModel instance) => <String, dynamic>{
       'name': instance.name,
-      'description': instance.description,
       'category': instance.category,
       'duration': instance.duration,
       'imageUrl': instance.imageUrl,

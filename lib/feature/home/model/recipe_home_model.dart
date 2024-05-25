@@ -5,12 +5,11 @@ part 'recipe_home_model.g.dart';
 @JsonSerializable()
 class RecipeHomeModel {
   String? name;
-  String? description;
   String? category;
   String? duration;
   String? imageUrl;
 
-  RecipeHomeModel({this.name, this.description, this.category, this.duration, this.imageUrl});
+  RecipeHomeModel({this.name, this.category, this.duration, this.imageUrl});
 
   factory RecipeHomeModel.fromJson(Map<String, dynamic> json) {
     return _$RecipeHomeModelFromJson(json);
