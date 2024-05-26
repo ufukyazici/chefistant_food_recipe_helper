@@ -7,22 +7,14 @@ import 'package:chefistant_food_recipe_helper/product/utility/constants/gemini_r
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiService {
-  Future<RecipeNavigationModel> sendMessage({required String apiKey, required promptText}) async {
+  Future<RecipeNavigationModel?> sendMessage({required String apiKey, required promptText}) async {
     final textModel = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
     GenerateContentResponse response;
     try {
       response = await textModel
           .generateContent([Content.text(GeminiRectipeText(recipeName: promptText).recipeWithNavigationText)]);
+      print(response.text);
       final responseJson = jsonDecode(response.text ?? "");
-      return RecipeNavigationModel.fromJson(responseJson);
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  RecipeNavigationModel? responseToModel(String response) {
-    try {
-      final responseJson = jsonDecode(response);
       return RecipeNavigationModel.fromJson(responseJson);
     } catch (e) {
       return null;

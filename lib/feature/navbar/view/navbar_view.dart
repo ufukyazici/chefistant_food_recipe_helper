@@ -48,7 +48,7 @@ class NavbarView extends StatelessWidget {
 }
 
 List<Widget> _buildScreens() {
-  return [const HomeView(), const AiRecipeHomeView(), const HomeView(), const AiRecipeHomeView()];
+  return [const HomeView(), AiRecipeHomeView(), const HomeView(), AiRecipeHomeView()];
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() {

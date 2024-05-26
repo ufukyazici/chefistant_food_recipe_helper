@@ -16,7 +16,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HomeCubit>(
       create: (context) => HomeCubit()..fetchRecipes(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
