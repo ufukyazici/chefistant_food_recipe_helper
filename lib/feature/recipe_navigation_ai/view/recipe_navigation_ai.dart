@@ -18,26 +18,37 @@ class RecipeNavigationAiView extends StatelessWidget {
       create: (context) => RecipeNavigationAiCubit(recipeNavigation),
       child: Scaffold(
         appBar: projectAppbar(title: "general.appName".tr()),
-        body: Padding(
-          padding: const ProjectPadding.largeAll(),
-          child: Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const ProjectPadding.largeAll(),
+            child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlocBuilder<RecipeNavigationAiCubit, RecipeNavigationAiState>(
-                    builder: (context, state) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: recipeNavigation.steps?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(recipeNavigation.steps?[index].step ?? ''),
-                              subtitle: Text(recipeNavigation.steps?[index].duration.toString() ?? ""),
-                            );
-                          });
-                    },
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: BlocBuilder<RecipeNavigationAiCubit,
+                        RecipeNavigationAiState>(
+                      builder: (context, state) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: recipeNavigation.steps?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const ProjectPadding.smallAll(),
+                                child: ListTile(
+                                  title: Text(
+                                      recipeNavigation.steps?[index].step ??
+                                          ''),
+                                  subtitle: Text(recipeNavigation
+                                          .steps?[index].duration
+                                          .toString() ??
+                                      ""),
+                                ),
+                              );
+                            });
+                      },
+                    ),
                   ),
                   const RecipeLottieWidget(),
                   const RecipeStepText(),
@@ -104,14 +115,17 @@ class RecipeNavigationButton extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           height: state.timerStatus ? 35 : 35,
           child: ProjectDefaultButton(
-              buttonText:
-                  state.currentIndex == 0 ? "recipeNavigation.startRecipe".tr() : "recipeNavigation.nextStep".tr(),
+              buttonText: state.currentIndex == 0
+                  ? "recipeNavigation.startRecipe".tr()
+                  : "recipeNavigation.nextStep".tr(),
               isBackgroundWhite: true,
               onPressed: () {
                 if (state.currentIndex != 0) {
                   context.read<RecipeNavigationAiCubit>().cancelTimer();
                 }
-                context.read<RecipeNavigationAiCubit>().incrementIndexAndStart(state.currentIndex);
+                context
+                    .read<RecipeNavigationAiCubit>()
+                    .incrementIndexAndStart(state.currentIndex);
               }),
         );
       },
